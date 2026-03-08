@@ -8,4 +8,4 @@ Disallow: /admin/
 Disallow: /admin
 
 # Sitemap
-Sitemap: https://luminajewelry.com/sitemap.xml
+Sitemap: https://zeraygold.com.tr/sitemap.xml

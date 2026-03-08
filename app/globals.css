@@ -9,7 +9,7 @@
   }
 }
 
-/* Lumina Altın konsepti için ince animasyonlar */
+/* Zeray Gold Altın konsepti için ince animasyonlar */
 @layer utilities {
   .zoom-image {
     @apply transition-transform duration-700 ease-out hover:scale-105;

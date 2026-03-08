@@ -32,8 +32,8 @@ export default function Home() {
 
   // BAŞLANGIÇ YÜKLEMELERİ (SEPET & URL PARAMETRELERİ)
   useEffect(() => {
-    const savedCart = localStorage.getItem('lumina_cart');
-    const savedWishlist = localStorage.getItem('lumina_wishlist');
+    const savedCart = localStorage.getItem('zeray_cart');
+    const savedWishlist = localStorage.getItem('zeray_wishlist');
     if (savedCart) setCart(JSON.parse(savedCart));
     if (savedWishlist) setWishlist(JSON.parse(savedWishlist));
 
@@ -126,7 +126,7 @@ export default function Home() {
   // --- SEPET İŞLEMLERİ ---
   const saveCart = (newCart: any[]) => {
     setCart(newCart);
-    localStorage.setItem('lumina_cart', JSON.stringify(newCart));
+    localStorage.setItem('zeray_cart', JSON.stringify(newCart));
   };
 
   const addToCart = (product: any) => {
@@ -166,7 +166,7 @@ export default function Home() {
       updatedWishlist.push(product);
     }
     setWishlist(updatedWishlist);
-    localStorage.setItem('lumina_wishlist', JSON.stringify(updatedWishlist));
+    localStorage.setItem('zeray_wishlist', JSON.stringify(updatedWishlist));
   };
 
   // --- SİPARİŞ & ÜYELİK İŞLEMLERİ ---
@@ -259,7 +259,7 @@ export default function Home() {
       if (oErr) throw oErr;
 
       setOrderSuccess(true);
-      localStorage.removeItem('lumina_cart');
+      localStorage.removeItem('zeray_cart');
       setCart([]);
       setTimeout(() => {
         setIsCheckoutOpen(false);
@@ -905,7 +905,7 @@ export default function Home() {
           {wishlist.length > 0 && (
             <div className="p-6 md:p-8 bg-zinc-50 border-t border-zinc-200">
               <button
-                onClick={() => { setWishlist([]); localStorage.removeItem('lumina_wishlist'); setIsWishlistOpen(false); }}
+                onClick={() => { setWishlist([]); localStorage.removeItem('zeray_wishlist'); setIsWishlistOpen(false); }}
                 className="w-full py-4 bg-transparent border border-zinc-300 text-zinc-600 font-bold uppercase tracking-[0.2em] text-[11px] hover:bg-red-50 hover:text-red-600 hover:border-red-200 transition-all duration-300 rounded-sm"
               >
                 Listeyi Temizle
@@ -1149,7 +1149,7 @@ export default function Home() {
                   >
                     <h3 className="font-serif text-2xl text-zinc-900 mb-2">Siparişiniz Alındı!</h3>
                     <p className="text-xs text-zinc-400 tracking-widest leading-relaxed max-w-xs mx-auto">
-                      Lumina ekibi en kısa sürede sizinle iletişime geçecektir. Teşekkürler! ✦
+                      Zeray Gold ekibi en kısa sürede sizinle iletişime geçecektir. Teşekkürler! ✦
                     </p>
                   </motion.div>
                   <div className="w-12 h-[1px] bg-[#d4af37]/50" />

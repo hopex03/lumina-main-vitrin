@@ -52,7 +52,7 @@ export default function ContactPage() {
                     <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
                     Ana Sayfa
                 </Link>
-                <Link href="/" className="text-2xl md:text-3xl font-serif tracking-[0.35em] text-black">LUMINA</Link>
+                <Link href="/" className="text-2xl md:text-3xl font-serif tracking-[0.35em] text-black">ZERAY GOLD</Link>
                 <div className="w-24" />
             </header>
 
@@ -82,7 +82,7 @@ export default function ContactPage() {
                         <p className="text-[#d4af37] text-[10px] tracking-[0.4em] uppercase font-bold mb-4">İletişim Bilgileri</p>
                         <div className="space-y-6">
                             {[
-                                { label: 'E-Posta', value: 'info@luminajewelry.com', href: 'mailto:info@luminajewelry.com' },
+                                { label: 'E-Posta', value: 'info@zeraygold.com.tr', href: 'mailto:info@zeraygold.com.tr' },
                                 { label: 'Telefon', value: '+90 (532) 000 00 00', href: 'tel:+905320000000' },
                                 { label: 'Adres', value: 'İstanbul, Türkiye', href: '#' },
                             ].map(item => (
@@ -207,7 +207,7 @@ export default function ContactPage() {
 
             {/* FOOTER MINI */}
             <footer className="bg-zinc-950 border-t border-zinc-800 py-8 text-center">
-                <p className="text-[10px] text-zinc-500 tracking-[0.2em] uppercase">© 2026 <span className="text-[#d4af37]/70">LUMINA</span> JEWELRY</p>
+                <p className="text-[10px] text-zinc-500 tracking-[0.2em] uppercase">© 2026 <span className="text-[#d4af37]/70">ZERAY GOLD</span> JEWELRY</p>
             </footer>
         </div>
     );

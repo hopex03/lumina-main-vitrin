@@ -36,11 +36,11 @@ export default function ProductDetail() {
       if (data) {
         setProduct(data);
         setActiveImage(data.image);
-        const wl = JSON.parse(localStorage.getItem('lumina_wishlist') || '[]');
+        const wl = JSON.parse(localStorage.getItem('zeray_wishlist') || '[]');
         setWishlistActive(wl.some((w: any) => w.id === data.id));
         setWishlistItems(wl);
         // sync cart from localStorage
-        setCart(JSON.parse(localStorage.getItem('lumina_cart') || '[]'));
+        setCart(JSON.parse(localStorage.getItem('zeray_cart') || '[]'));
 
         // Fetch related products: same category, different id
         const { data: related } = await supabase
@@ -68,14 +68,14 @@ export default function ProductDetail() {
 
   const handleAddToCart = () => {
     if (!product) return;
-    const storedCart = JSON.parse(localStorage.getItem('lumina_cart') || '[]');
+    const storedCart = JSON.parse(localStorage.getItem('zeray_cart') || '[]');
     const existing = storedCart.find((item: any) => item.id === product.id);
     if (existing) {
       existing.quantity += 1;
     } else {
       storedCart.push({ ...product, quantity: 1 });
     }
-    localStorage.setItem('lumina_cart', JSON.stringify(storedCart));
+    localStorage.setItem('zeray_cart', JSON.stringify(storedCart));
     setCart(storedCart);
     setAddedToCart(true);
     setTimeout(() => {
@@ -87,7 +87,7 @@ export default function ProductDetail() {
   const removeFromCart = (id: number) => {
     const updated = cart.filter((item: any) => item.id !== id);
     setCart(updated);
-    localStorage.setItem('lumina_cart', JSON.stringify(updated));
+    localStorage.setItem('zeray_cart', JSON.stringify(updated));
   };
 
   const cartTotal = cart.reduce((sum: number, item: any) => {
@@ -101,14 +101,14 @@ export default function ProductDetail() {
       e.stopPropagation();
     }
     if (!product) return;
-    let stored = JSON.parse(localStorage.getItem('lumina_wishlist') || '[]');
+    let stored = JSON.parse(localStorage.getItem('zeray_wishlist') || '[]');
     const exists = stored.some((w: any) => w.id === product.id);
     if (exists) {
       stored = stored.filter((w: any) => w.id !== product.id);
     } else {
       stored.push(product);
     }
-    localStorage.setItem('lumina_wishlist', JSON.stringify(stored));
+    localStorage.setItem('zeray_wishlist', JSON.stringify(stored));
     setWishlistActive(!exists);
     setWishlistItems(stored);
   };
@@ -260,7 +260,7 @@ export default function ProductDetail() {
           <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
           Vitrine Dön
         </Link>
-        <Link href="/" className="text-2xl md:text-3xl font-serif tracking-[0.35em] text-black">LUMINA</Link>
+        <Link href="/" className="text-2xl md:text-3xl font-serif tracking-[0.35em] text-black">ZERAY GOLD</Link>
         <div className="w-24 flex justify-end gap-3">
           <button
             onClick={() => setIsWishlistOpen(true)}
@@ -635,10 +635,10 @@ export default function ProductDetail() {
                         <button
                           onClick={(e) => {
                             e.preventDefault();
-                            const cart = JSON.parse(localStorage.getItem('lumina_cart') || '[]');
+                            const cart = JSON.parse(localStorage.getItem('zeray_cart') || '[]');
                             const ex = cart.find((i: any) => i.id === rel.id);
                             if (ex) ex.quantity += 1; else cart.push({ ...rel, quantity: 1 });
-                            localStorage.setItem('lumina_cart', JSON.stringify(cart));
+                            localStorage.setItem('zeray_cart', JSON.stringify(cart));
                             setAddedIds(prev => new Set(prev).add(rel.id));
                             setTimeout(() => setAddedIds(prev => { const s = new Set(prev); s.delete(rel.id); return s; }), 2000);
                           }}
@@ -689,7 +689,7 @@ export default function ProductDetail() {
 
       {/* FOOTER */}
       <footer className="bg-black py-10 text-center text-[10px] text-zinc-600 tracking-[0.3em] uppercase border-t border-zinc-800">
-        © 2026 <span className="text-[#d4af37]/70">LUMINA</span> JEWELRY. TÜM HAKLARI SAKLIDIR.
+        © 2026 <span className="text-[#d4af37]/70">ZERAY GOLD</span> JEWELRY. TÜM HAKLARI SAKLIDIR.
       </footer>
     </div>
   );

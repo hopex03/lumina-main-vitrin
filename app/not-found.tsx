@@ -19,7 +19,7 @@ export default function NotFound() {
                 transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             >
                 <p className="text-[#d4af37] text-[10px] tracking-[0.5em] uppercase font-bold mb-6">
-                    Lumina Jewelry
+                    Zeray Gold
                 </p>
                 <h1 className="font-serif text-[120px] md:text-[180px] leading-none text-white/10 font-black tracking-tighter select-none">
                     404

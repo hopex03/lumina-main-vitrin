@@ -12,8 +12,8 @@ export default function WhatsAppButton({ productName, variant = 'floating' }: Wh
 
     // Dynamic text generation based on product context
     const text = productName
-        ? `Lumina Mücevherat Destek Merkezi: ${productName} hakkında bilgi almak istiyorum.`
-        : `Merhaba Lumina, seçtiğim mücevherler hakkında özel destek almak istiyorum.`;
+        ? `Zeray Gold Mücevherat Destek Merkezi: ${productName} hakkında bilgi almak istiyorum.`
+        : `Merhaba Zeray Gold, seçtiğim mücevherler hakkında özel destek almak istiyorum.`;
 
     const encodedText = encodeURIComponent(text);
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedText}`;

@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 
-const ADMIN_PASSWORD = 'Lumina2026!';
+const ADMIN_PASSWORD = 'Zeray2026!';
 
 export default function AdminPanel() {
   const [activeTab, setActiveTab] = useState('urunler');
@@ -11,7 +11,7 @@ export default function AdminPanel() {
   const [pwError, setPwError] = useState(false);
 
   useEffect(() => {
-    if (sessionStorage.getItem('lumina_admin_auth') === 'ok') {
+    if (sessionStorage.getItem('zeray_admin_auth') === 'ok') {
       setIsAuthenticated(true);
     }
   }, []);
@@ -229,7 +229,7 @@ export default function AdminPanel() {
       <div className="min-h-screen bg-[#1d2327] flex items-center justify-center">
         <div className="bg-[#2c3338] border border-[#3c434a] p-10 w-full max-w-sm shadow-2xl">
           <div className="text-center mb-8">
-            <div className="text-3xl font-serif tracking-[0.3em] text-white mb-1">LUMINA</div>
+            <div className="text-3xl font-serif tracking-[0.3em] text-white mb-1">ZERAY GOLD</div>
             <div className="text-[#72aee6] text-[11px] tracking-[0.25em] uppercase font-bold">Admin Panel</div>
           </div>
           <div className="mb-4">
@@ -241,7 +241,7 @@ export default function AdminPanel() {
               onKeyDown={e => {
                 if (e.key === 'Enter') {
                   if (pwInput === ADMIN_PASSWORD) {
-                    sessionStorage.setItem('lumina_admin_auth', 'ok');
+                    sessionStorage.setItem('zeray_admin_auth', 'ok');
                     setIsAuthenticated(true);
                   } else {
                     setPwError(true);
@@ -258,7 +258,7 @@ export default function AdminPanel() {
           <button
             onClick={() => {
               if (pwInput === ADMIN_PASSWORD) {
-                sessionStorage.setItem('lumina_admin_auth', 'ok');
+                sessionStorage.setItem('zeray_admin_auth', 'ok');
                 setIsAuthenticated(true);
               } else {
                 setPwError(true);
@@ -287,7 +287,7 @@ export default function AdminPanel() {
       {/* === SOL MENÜ === */}
       <aside className="w-[160px] md:w-[200px] bg-[#1d2327] text-white flex flex-col z-20 shrink-0">
         <div className="h-12 flex items-center px-4 bg-[#2c3338] font-bold text-sm tracking-wider">
-          LUMINA ADMIN
+          ZERAY GOLD ADMIN
         </div>
         <nav className="flex-1 py-4 flex flex-col">
           <button
@@ -370,7 +370,7 @@ export default function AdminPanel() {
             target="_blank"
             className="hover:text-[#2271b1] transition-colors flex items-center gap-1 font-medium"
           >
-            🏠 Lumina Vitrin'e Git
+            🏠 Zeray Gold Vitrin'e Git
           </a>
           <div className="flex items-center gap-2">
             <span className="text-green-600 font-bold tracking-widest text-[10px] uppercase mr-2 border border-green-600 px-2 py-0.5 rounded-sm">
@@ -570,12 +570,12 @@ export default function AdminPanel() {
                             name="vendor_name"
                             defaultValue={
                               fullEditData !== 'new'
-                                ? (fullEditData.vendor_name || 'Lumina Özel')
-                                : 'Lumina Özel'
+                                ? (fullEditData.vendor_name || 'Zeray Gold Özel')
+                                : 'Zeray Gold Özel'
                             }
                             className="p-2 border border-gray-300 w-full mb-4"
                           >
-                            <option value="Lumina Özel">Lumina Özel</option>
+                            <option value="Zeray Gold Özel">Zeray Gold Özel</option>
                             <option value="Kuyumcu A">Kuyumcu A</option>
                             <option value="Kuyumcu B">Kuyumcu B</option>
                           </select>
@@ -769,7 +769,7 @@ export default function AdminPanel() {
                                 </td>
                                 <td className="p-3 align-top">
                                   <span className="text-[11px] uppercase tracking-wider font-bold bg-[#f0f0f1] px-2 py-1 rounded-sm text-zinc-600">
-                                    {p.vendor_name || 'Lumina Özel'}
+                                    {p.vendor_name || 'Zeray Gold Özel'}
                                   </span>
                                 </td>
                                 <td className="p-3 align-top">
@@ -965,7 +965,7 @@ export default function AdminPanel() {
                                           </div>
                                           <div>
                                             <span className="inline-block mt-0.5 px-2 py-0.5 bg-[#d4af37]/10 text-[#d4af37] border border-[#d4af37]/30 text-[9px] font-bold uppercase tracking-widest rounded-sm">
-                                              Satıcı: {item.vendor_name || 'Lumina Özel'}
+                                              Satıcı: {item.vendor_name || 'Zeray Gold Özel'}
                                             </span>
                                           </div>
                                         </li>

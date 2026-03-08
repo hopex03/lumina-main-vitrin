@@ -15,7 +15,7 @@ export default function ProductDetail() {
           href="/"
           className="text-3xl font-serif tracking-widest text-black cursor-pointer"
         >
-          LUMINA
+          ZERAY GOLD
         </a>
         <div className="text-sm font-semibold tracking-widest cursor-pointer hover:text-gray-500">
           SEPETİM (0)
@@ -74,7 +74,7 @@ export default function ProductDetail() {
                   <span className="font-semibold text-gray-900">
                     Sertifika:
                   </span>{' '}
-                  Lumina Orijinallik Belgesi
+                  Zeray Gold Orijinallik Belgesi
                 </li>
               </ul>
             </div>
