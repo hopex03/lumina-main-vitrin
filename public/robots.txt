@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Allow: /urun/
+Allow: /iletisim/
+
+# Admin paneli dizini arama motorlarından gizle
+Disallow: /admin/
+Disallow: /admin
+
+# Sitemap
+Sitemap: https://luminajewelry.com/sitemap.xml

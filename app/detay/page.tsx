@@ -30,7 +30,7 @@ export default function ProductDetail() {
             <div className="aspect-[4/5] overflow-hidden bg-gray-50">
               <img
                 src="https://images.unsplash.com/photo-1605100804763-247f66128e08?auto=format&fit=crop&w=1000&q=80"
-                alt="14 Ayar Baget Pırlanta Yüzük"
+                alt="14 Ayar Altın Baget Yüzük"
                 className="w-full h-full object-cover object-center hover:scale-110 transition-transform duration-1000 cursor-crosshair"
               />
             </div>
@@ -43,7 +43,7 @@ export default function ProductDetail() {
             </p>
 
             <h1 className="text-4xl font-serif text-gray-900 mb-4 leading-tight">
-              14 Ayar Baget Pırlanta Yüzük
+              14 Ayar Altın Baget Yüzük
             </h1>
 
             <p className="text-2xl font-medium text-black mb-8">12.500 ₺</p>
@@ -51,8 +51,8 @@ export default function ProductDetail() {
             <div className="border-t border-gray-200 py-6 mb-6">
               <p className="text-gray-600 leading-relaxed mb-6">
                 Zarafeti ve ışıltıyı bir araya getiren bu özel tasarım baget
-                yüzük, 14 ayar altın işçiliği ve özenle seçilmiş laboratuvar
-                pırlantaları ile hayat buluyor. Gündüzden geceye her anınıza
+                yüzük, 14 ayar altın işçiliği ve özenle seçilmiş taşları
+                ile hayat buluyor. Gündüzden geceye her anınıza
                 eşlik edecek kusursuz bir parça.
               </p>
 
@@ -68,7 +68,7 @@ export default function ProductDetail() {
                 </li>
                 <li>
                   <span className="font-semibold text-gray-900">Taş:</span>{' '}
-                  Zirkon Baget (Pırlanta Montür)
+                  Zirkon Baget (Altın Montür)
                 </li>
                 <li>
                   <span className="font-semibold text-gray-900">

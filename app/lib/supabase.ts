@@ -1,7 +1,6 @@
 import { createClient } from '@supabase/supabase-js';
 
-// .env.local derdini atladık, şifreleri direkt buraya yazdık:
-const supabaseUrl = 'https://ozqwmcorufpvldzhqfzt.supabase.co';
-const supabaseAnonKey = 'sb_publishable__kqCwArMzPxmBtTI4daG1Q_tfaeQ6ST';
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);

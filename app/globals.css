@@ -5,12 +5,39 @@
 @layer base {
   body {
     @apply bg-white text-dark;
+    scroll-behavior: smooth;
   }
 }
 
-/* Zen Pırlanta konsepti için ince animasyonlar */
+/* Lumina Altın konsepti için ince animasyonlar */
 @layer utilities {
   .zoom-image {
     @apply transition-transform duration-700 ease-out hover:scale-105;
   }
+
+  .text-gradient-gold {
+    @apply bg-clip-text text-transparent bg-gold-gradient;
+  }
+
+  .gold-shadow {
+    box-shadow: 0 4px 14px 0 rgba(212, 175, 55, 0.39);
+  }
+}
+
+/* Custom Premium Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D4AF37;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #AA8C2C;
 }

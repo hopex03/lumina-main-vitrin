@@ -1,20 +1,36 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import { supabase } from '../lib/supabase'; // İŞTE GERÇEK KASA BAĞLANTIMIZ!
+import { supabase } from '../lib/supabase';
+
+const ADMIN_PASSWORD = 'Lumina2026!';
 
 export default function AdminPanel() {
   const [activeTab, setActiveTab] = useState('urunler');
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [pwInput, setPwInput] = useState('');
+  const [pwError, setPwError] = useState(false);
+
+  useEffect(() => {
+    if (sessionStorage.getItem('lumina_admin_auth') === 'ok') {
+      setIsAuthenticated(true);
+    }
+  }, []);
 
   // --- ÜRÜN YÖNETİMİ STATE'LERİ ---
   const [quickEditId, setQuickEditId] = useState<number | null>(null);
   const [fullEditData, setFullEditData] = useState<any | 'new' | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
+  const [imageUrl, setImageUrl] = useState<string>('');
   const [isLoading, setIsLoading] = useState(true);
+  const [toast, setToast] = useState<{ msg: string; type: 'ok' | 'err' } | null>(null);
 
   // --- GERÇEK VERİTABANI STATE'LERİ (Artık İçi Boş Başlıyor, Supabase'den Dolacak) ---
   const [products, setProducts] = useState<any[]>([]);
   const [orders, setOrders] = useState<any[]>([]);
   const [customers, setCustomers] = useState<any[]>([]);
+  const [messages, setMessages] = useState<any[]>([]);
+  const [unreadCount, setUnreadCount] = useState(0);
 
   const categoryList = ['Saat', 'Bileklik', 'Kolye', 'Yüzük', 'Küpe'];
 
@@ -23,6 +39,7 @@ export default function AdminPanel() {
     fetchProducts();
     fetchOrders();
     fetchCustomers();
+    fetchMessages();
   }, []);
 
   const fetchProducts = async () => {
@@ -69,42 +86,54 @@ export default function AdminPanel() {
     setIsLoading(false);
   };
 
+  const fetchMessages = async () => {
+    const { data } = await supabase
+      .from('messages')
+      .select('*')
+      .order('created_at', { ascending: false });
+    if (data) {
+      setMessages(data);
+      setUnreadCount(data.filter((m: any) => !m.is_read).length);
+    }
+  };
+
+  const markAsRead = async (id: number) => {
+    await supabase.from('messages').update({ is_read: true }).eq('id', id);
+    setMessages(prev => prev.map(m => m.id === id ? { ...m, is_read: true } : m));
+    setUnreadCount(prev => Math.max(0, prev - 1));
+  };
+
+  const showToast = (msg: string, type: 'ok' | 'err' = 'ok') => {
+    setToast({ msg, type });
+    setTimeout(() => setToast(null), 3500);
+  };
+
   // --- 2. SUPABASE ÜRÜN SİLME ---
   const deleteProduct = async (id: number) => {
-    if (
-      confirm(
-        'Bu ürünü tamamen silmek istediğinize emin misiniz? (Geri alınamaz!)'
-      )
-    ) {
-      // Veritabanından Sil
-      await supabase.from('products').delete().eq('id', id);
-
-      // Ekrandan (State'den) Sil
+    if (confirm('Bu ürünü tamamen silmek istediğinize emin misiniz? (Geri alınamaz!)')) {
+      const { error } = await supabase.from('products').delete().eq('id', id);
+      if (error) { showToast('❌ Silme hata: ' + error.message, 'err'); return; }
       setProducts(products.filter((p) => p.id !== id));
       if (quickEditId === id) setQuickEditId(null);
+      showToast('✅ Ürün silindi.');
     }
   };
 
   // --- 3. SUPABASE HIZLI DÜZENLEME ---
-  const handleQuickEditSave = async (
-    e: React.FormEvent<HTMLFormElement>,
-    id: number
-  ) => {
+  const handleQuickEditSave = async (e: React.FormEvent<HTMLFormElement>, id: number) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-
+    const salePriceRaw = formData.get('salePrice') as string;
     const updatedData = {
       name: formData.get('name') as string,
       price: formData.get('price') as string,
-      sale_price: formData.get('salePrice') as string,
+      sale_price: salePriceRaw !== '' ? salePriceRaw : null,  // FIX: empty string → null
       stock: parseInt(formData.get('stock') as string) || 0,
       status: formData.get('status') as string,
     };
-
-    // Veritabanını Güncelle
-    await supabase.from('products').update(updatedData).eq('id', id);
-
-    // Ekranı Güncelle
+    const { error } = await supabase.from('products').update(updatedData).eq('id', id);
+    if (error) { showToast('❌ Güncelleme hata: ' + error.message, 'err'); return; }
+    showToast('✅ Ürün güncellendi.');
     fetchProducts();
     setQuickEditId(null);
   };
@@ -115,72 +144,146 @@ export default function AdminPanel() {
     const formData = new FormData(e.currentTarget);
     const selectedCategory = (formData.get('category') as string) || 'Kolye';
     const finalStock = parseInt(formData.get('stock') as string) || 0;
-    const finalImage =
-      uploadedImage ||
-      (fullEditData !== 'new'
-        ? fullEditData.image
-        : 'https://images.unsplash.com/photo-1599643478524-fb66f7ca1523?auto=format&fit=crop&w=150&q=80');
+    const salePriceRaw = formData.get('salePrice') as string;
 
-    const productData = {
+    // Use imageUrl (from Storage upload or manual paste) or fall back to existing image
+    const finalImage =
+      imageUrl.trim() ||
+      (fullEditData !== 'new' ? fullEditData.image : '') ||
+      '';
+
+    if (!finalImage) {
+      showToast('⚠️ Bir görsel seçin veya URL girin.', 'err');
+      return;
+    }
+
+    const productData: any = {
       name: (formData.get('name') as string) || 'İsimsiz Ürün',
-      slug: 'urun-' + Math.floor(Math.random() * 1000),
       category: selectedCategory,
+      vendor_name: (formData.get('vendor_name') as string) || 'Lumina Özel',
       price: (formData.get('price') as string) || '0',
-      sale_price: formData.get('salePrice') as string,
-      sku: 'LMN-' + Math.floor(Math.random() * 10000),
+      sale_price: salePriceRaw !== '' ? salePriceRaw : null,
       stock: finalStock,
       status: (formData.get('status') as string) || 'Yayımlanmış',
       description: formData.get('description') as string,
       metal: formData.get('metal') as string,
       gram: formData.get('gram') as string,
       image: finalImage,
-      image2: (formData.get('ekstraUrl_0') as string) || null,
-      image3: (formData.get('ekstraUrl_1') as string) || null,
-      images: [
-        formData.get('ekstraUrl_0'),
-        formData.get('ekstraUrl_1'),
-        formData.get('ekstraUrl_2'),
-        formData.get('ekstraUrl_3'),
-        formData.get('ekstraUrl_4')
-      ].filter(Boolean) as string[],
     };
 
+    let error: any;
     if (fullEditData === 'new') {
-      // YENİ ÜRÜN EKLE
-      await supabase.from('products').insert([productData]);
+      // BUG FIX: only generate slug on INSERT, not update
+      productData.slug = 'urun-' + Math.floor(Math.random() * 100000);
+      productData.sku = 'LMN-' + Math.floor(Math.random() * 10000);
+      const res = await supabase.from('products').insert([productData]);
+      error = res.error;
     } else {
-      // MEVCUT ÜRÜNÜ GÜNCELLE
-      await supabase
-        .from('products')
-        .update(productData)
-        .eq('id', fullEditData.id);
+      // BUG FIX: preserve existing slug + sku on update
+      const res = await supabase.from('products').update(productData).eq('id', fullEditData.id);
+      error = res.error;
     }
 
-    // İşlem bitince verileri yeniden çek ve formu kapat
+    if (error) { showToast('❌ Kaydetme hata: ' + error.message, 'err'); return; }
+    showToast(fullEditData === 'new' ? '✅ Yeni ürün eklendi!' : '✅ Ürün güncellendi!');
     fetchProducts();
     setFullEditData(null);
     setUploadedImage(null);
+    setImageUrl('');
   };
 
-  // --- DİĞER FONKSİYONLAR ---
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  // --- GÖRSEL YÜKLEME: Base64 Çeviri (Kalıcı Saklama) ---
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setUploadedImage(imageUrl);
-    }
+    if (!file) return;
+    setIsUploading(true);
+    showToast('⏳ Görsel işleniyor...', 'ok');
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const base64String = reader.result as string;
+      setImageUrl(base64String);
+      setUploadedImage(null);
+      setIsUploading(false);
+      showToast('✅ Görsel kalıcı olarak eklendi!', 'ok');
+    };
+    reader.onerror = () => {
+      showToast('❌ Görsel okuma hatası!', 'err');
+      setIsUploading(false);
+    };
+
+    // Read the image file as a data URL.
+    reader.readAsDataURL(file);
   };
 
   const openFullEdit = (data: any) => {
     setFullEditData(data);
     setUploadedImage(null);
+    setImageUrl(data !== 'new' ? (data.image || '') : '');
   };
 
-  const displayImage =
-    uploadedImage || (fullEditData !== 'new' ? fullEditData?.image : null);
+  const displayImage = imageUrl.trim() || uploadedImage || (fullEditData !== 'new' ? fullEditData?.image : null);
+
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-[#1d2327] flex items-center justify-center">
+        <div className="bg-[#2c3338] border border-[#3c434a] p-10 w-full max-w-sm shadow-2xl">
+          <div className="text-center mb-8">
+            <div className="text-3xl font-serif tracking-[0.3em] text-white mb-1">LUMINA</div>
+            <div className="text-[#72aee6] text-[11px] tracking-[0.25em] uppercase font-bold">Admin Panel</div>
+          </div>
+          <div className="mb-4">
+            <label className="block text-[#a7aaad] text-[11px] uppercase tracking-wider mb-2 font-bold">Parola</label>
+            <input
+              type="password"
+              value={pwInput}
+              onChange={e => { setPwInput(e.target.value); setPwError(false); }}
+              onKeyDown={e => {
+                if (e.key === 'Enter') {
+                  if (pwInput === ADMIN_PASSWORD) {
+                    sessionStorage.setItem('lumina_admin_auth', 'ok');
+                    setIsAuthenticated(true);
+                  } else {
+                    setPwError(true);
+                    setPwInput('');
+                  }
+                }
+              }}
+              placeholder="••••••••••••"
+              className="w-full p-3 bg-[#1d2327] border border-[#3c434a] text-white text-sm outline-none focus:border-[#2271b1] placeholder-zinc-600"
+              autoFocus
+            />
+            {pwError && <p className="text-red-400 text-xs mt-2 tracking-wide">Hatalı parola.</p>}
+          </div>
+          <button
+            onClick={() => {
+              if (pwInput === ADMIN_PASSWORD) {
+                sessionStorage.setItem('lumina_admin_auth', 'ok');
+                setIsAuthenticated(true);
+              } else {
+                setPwError(true);
+                setPwInput('');
+              }
+            }}
+            className="w-full bg-[#2271b1] hover:bg-[#135e96] text-white py-3 text-[12px] font-bold tracking-wider uppercase transition-colors"
+          >
+            Giriş Yap
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
+
     <div className="min-h-screen flex bg-[#f0f0f1] font-sans text-[13px] text-[#3c434a]">
+      {/* TOAST NOTIFICATION */}
+      {toast && (
+        <div className={`fixed top-4 right-4 z-[999] px-5 py-3 rounded-sm shadow-2xl text-white font-bold text-[13px] transition-all animate-fade-in ${toast.type === 'ok' ? 'bg-green-600' : 'bg-red-600'
+          }`}>
+          {toast.msg}
+        </div>
+      )}
       {/* === SOL MENÜ === */}
       <aside className="w-[160px] md:w-[200px] bg-[#1d2327] text-white flex flex-col z-20 shrink-0">
         <div className="h-12 flex items-center px-4 bg-[#2c3338] font-bold text-sm tracking-wider">
@@ -240,6 +343,20 @@ export default function AdminPanel() {
               }`}
           >
             👥 Müşteriler
+          </button>
+          <div className="mt-4 mb-1 px-4 text-[#a7aaad] text-[11px] font-bold uppercase tracking-wider">
+            İletişim
+          </div>
+          <button
+            onClick={() => { setActiveTab('mesajlar'); setFullEditData(null); }}
+            className={`text-left px-4 py-2.5 hover:text-[#72aee6] transition-colors relative ${activeTab === 'mesajlar' ? 'bg-[#2271b1] text-white font-semibold' : 'text-[#f0f0f1]'}`}
+          >
+            ✉️ Mesajlar
+            {unreadCount > 0 && (
+              <span className="absolute right-3 top-1/2 -translate-y-1/2 bg-red-500 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center">
+                {unreadCount}
+              </span>
+            )}
           </button>
         </nav>
       </aside>
@@ -448,7 +565,22 @@ export default function AdminPanel() {
                           Yayımla
                         </div>
                         <div className="p-3 text-gray-600">
-                          <label className="font-semibold mr-2">Durum:</label>
+                          <label className="font-semibold mr-2 block mb-2">Tedarikçi (Kuyumcu):</label>
+                          <select
+                            name="vendor_name"
+                            defaultValue={
+                              fullEditData !== 'new'
+                                ? (fullEditData.vendor_name || 'Lumina Özel')
+                                : 'Lumina Özel'
+                            }
+                            className="p-2 border border-gray-300 w-full mb-4"
+                          >
+                            <option value="Lumina Özel">Lumina Özel</option>
+                            <option value="Kuyumcu A">Kuyumcu A</option>
+                            <option value="Kuyumcu B">Kuyumcu B</option>
+                          </select>
+
+                          <label className="font-semibold mr-2 block mb-2">Durum:</label>
                           <select
                             name="status"
                             defaultValue={
@@ -456,7 +588,7 @@ export default function AdminPanel() {
                                 ? fullEditData.status
                                 : 'Yayımlanmış'
                             }
-                            className="p-1 border border-gray-300"
+                            className="p-2 border border-gray-300 w-full"
                           >
                             <option>Yayımlanmış</option>
                             <option>Taslak</option>
@@ -485,12 +617,10 @@ export default function AdminPanel() {
                         <div className="border-b border-[#c3c4c7] p-3 font-bold text-[#1d2327]">
                           Ürün Kategorileri
                         </div>
-                        <div className="p-4 flex flex-col gap-3">
+                        {/* BUG FIX: use key to force re-render when product changes, fixing stale defaultChecked */}
+                        <div className="p-4 flex flex-col gap-3" key={fullEditData === 'new' ? 'new' : fullEditData?.id}>
                           {categoryList.map((cat) => (
-                            <label
-                              key={cat}
-                              className="flex items-center gap-2 cursor-pointer"
-                            >
+                            <label key={cat} className="flex items-center gap-2 cursor-pointer">
                               <input
                                 type="radio"
                                 name="category"
@@ -502,74 +632,46 @@ export default function AdminPanel() {
                                 }
                                 className="w-4 h-4 text-[#2271b1] cursor-pointer"
                               />
-                              <span className="text-gray-700 font-medium">
-                                {cat}
-                              </span>
+                              <span className="text-gray-700 font-medium">{cat}</span>
                             </label>
                           ))}
                         </div>
                       </div>
 
+                      {/* GÖRSEL — URL veya dosya */}
                       <div className="border border-[#c3c4c7] bg-white shadow-sm">
-                        <div className="border-b border-[#c3c4c7] p-3 font-bold text-[#1d2327]">
-                          Ürün Görselleri
-                        </div>
+                        <div className="border-b border-[#c3c4c7] p-3 font-bold text-[#1d2327]">Ürün Görselleri</div>
                         <div className="p-4 text-center">
                           {displayImage ? (
-                            <img
-                              src={displayImage}
-                              alt="ürün"
-                              className="w-full h-auto max-h-48 object-contain mb-3 border border-gray-200"
-                            />
+                            <img src={displayImage} alt="ürün" className="w-full h-auto max-h-48 object-contain mb-3 border border-gray-200" />
                           ) : (
                             <div className="w-full h-32 bg-[#f0f0f1] border border-dashed border-[#8c8f94] flex items-center justify-center text-gray-400 mb-3">
                               Ana Görsel Seçilmedi
                             </div>
                           )}
-                          <label className="text-[#2271b1] hover:underline cursor-pointer block text-[13px] font-medium mb-3">
-                            Ana Görseli Seç (Yerel) veya URL Gir
-                            <input
-                              type="file"
-                              accept="image/*"
-                              onChange={handleImageUpload}
-                              className="hidden"
-                            />
+                          <input
+                            type="text"
+                            placeholder="Görsel URL'si yapıştır..."
+                            value={imageUrl}
+                            onChange={(e) => { setImageUrl(e.target.value); setUploadedImage(null); }}
+                            className="w-full p-2 border border-[#8c8f94] text-xs outline-none focus:border-[#2271b1] mb-3"
+                          />
+                          <label className={`cursor-pointer block text-[13px] font-medium mb-3 ${isUploading ? 'text-gray-400' : 'text-[#2271b1] hover:underline'}`}>
+                            {isUploading ? '⏳ Yükleniyor...' : 'Ya da Dosyadan Seç'}
+                            <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" disabled={isUploading} />
                           </label>
                           {displayImage && (
-                            <button
-                              type="button"
-                              onClick={() => setUploadedImage(null)}
-                              className="text-red-600 hover:underline mb-4 text-xs block mx-auto"
-                            >
+                            <button type="button" onClick={() => { setUploadedImage(null); setImageUrl(''); }} className="text-red-600 hover:underline mb-4 text-xs block mx-auto">
                               Görseli Kaldır
                             </button>
                           )}
                         </div>
                       </div>
 
-                      {/* EKSTRA GÖRSELLER BÖLÜMÜ */}
-                      <div className="border border-[#c3c4c7] bg-white shadow-sm">
-                        <div className="border-b border-[#c3c4c7] p-3 font-bold text-[#1d2327]">
-                          Ürün Görselleri Ekstra
-                        </div>
-                        <div className="p-4 list-none text-left flex flex-col gap-3">
-                          <p className="text-xs text-gray-500 italic mb-2">Hover efekti ve ürün galerisinde çıkacak resimlerin URL adreslerini buraya ekleyebilirsiniz.</p>
-                          {[0, 1, 2, 3, 4].map((index) => (
-                            <div key={index}>
-                              <label className="text-[11px] font-bold text-gray-400 uppercase">Görsel URL {index + 1}:</label>
-                              <input
-                                type="text"
-                                name={`ekstraUrl_${index}`}
-                                defaultValue={fullEditData !== 'new' && fullEditData.images && fullEditData.images[index] ? fullEditData.images[index] : (index === 0 ? fullEditData?.image2 : index === 1 ? fullEditData?.image3 : '')}
-                                className="w-full mt-1 p-2 border border-gray-300 text-xs"
-                                placeholder="https://..."
-                              />
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                      {/* Ekstra görsel kolonları (image2, image3) DB şemasında olmadığı için devre dışı */}
+
+                    </div>{/* end sağ sütun */}
+                  </div>{/* end xl:flex-row */}
                 </form>
               ) : (
                 // --- ÜRÜN LİSTESİ ---
@@ -592,6 +694,7 @@ export default function AdminPanel() {
                           <th className="p-3 w-16 text-center">Görsel</th>
                           <th className="p-3">İsim</th>
                           <th className="p-3">Kategori</th>
+                          <th className="p-3">Tedarikçi</th>
                           <th className="p-3">Stok</th>
                           <th className="p-3">Fiyat</th>
                         </tr>
@@ -663,6 +766,11 @@ export default function AdminPanel() {
                                 </td>
                                 <td className="p-3 align-top font-semibold text-gray-600">
                                   {p.category}
+                                </td>
+                                <td className="p-3 align-top">
+                                  <span className="text-[11px] uppercase tracking-wider font-bold bg-[#f0f0f1] px-2 py-1 rounded-sm text-zinc-600">
+                                    {p.vendor_name || 'Lumina Özel'}
+                                  </span>
                                 </td>
                                 <td className="p-3 align-top">
                                   <span
@@ -798,150 +906,252 @@ export default function AdminPanel() {
                 </div>
               )}
             </div>
-          )}
+          )
+          }
 
           {/* DİĞER SEKMELER */}
-          {activeTab === 'siparisler' && (
-            <div className="animate-fade-in">
-              <div className="flex items-center gap-4 mb-4">
-                <h1 className="text-[23px] font-normal text-[#1d2327]">Siparişler</h1>
-              </div>
-              <div className="bg-white border border-[#c3c4c7] shadow-[0_1px_1px_rgba(0,0,0,0.04)] pb-10">
-                <table className="w-full text-left border-collapse">
-                  <thead>
-                    <tr className="border-b border-[#c3c4c7] text-[#2c3338] font-bold bg-[#f6f7f7]">
-                      <th className="p-3">Sipariş No</th>
-                      <th className="p-3">Müşteri</th>
-                      <th className="p-3">Tutar</th>
-                      <th className="p-3">Tarih</th>
-                      <th className="p-3">Durum</th>
-                      <th className="p-3 text-right">İşlem</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {isLoading ? (
-                      <tr>
-                        <td colSpan={6} className="p-8 text-center text-gray-500 font-bold">
-                          Siparişler yükleniyor...
-                        </td>
+          {
+            activeTab === 'siparisler' && (
+              <div className="animate-fade-in">
+                <div className="flex items-center gap-4 mb-4">
+                  <h1 className="text-[23px] font-normal text-[#1d2327]">Siparişler</h1>
+                </div>
+                <div className="bg-white border border-[#c3c4c7] shadow-[0_1px_1px_rgba(0,0,0,0.04)] pb-10">
+                  <table className="w-full text-left border-collapse">
+                    <thead>
+                      <tr className="border-b border-[#c3c4c7] text-[#2c3338] font-bold bg-[#f6f7f7]">
+                        <th className="p-3">Sipariş No</th>
+                        <th className="p-3">Müşteri</th>
+                        <th className="p-3">Tedarikçi / Ürünler</th>
+                        <th className="p-3">Tutar</th>
+                        <th className="p-3">Tarih</th>
+                        <th className="p-3">Durum</th>
+                        <th className="p-3 text-right">İletişim</th>
                       </tr>
-                    ) : orders.length === 0 ? (
-                      <tr>
-                        <td colSpan={6} className="p-8 text-center text-gray-500">
-                          Henüz hiç sipariş bulunmuyor.
-                        </td>
-                      </tr>
-                    ) : (
-                      orders.map((order) => (
-                        <tr key={order.id} className="border-b border-[#f0f0f1] hover:bg-[#f6f7f7]">
-                          <td className="p-3 font-bold text-[#2271b1]">
-                            #{order.id}
-                          </td>
-                          <td className="p-3">{order.customer_name || 'Misafir'}</td>
-                          <td className="p-3 font-medium text-gray-700">{order.total_amount} ₺</td>
-                          <td className="p-3 text-gray-500 text-[12px]">
-                            {new Date(order.created_at).toLocaleDateString('tr-TR')}
-                          </td>
-                          <td className="p-3">
-                            <span className={`px-2 py-1 text-[11px] font-bold rounded-sm uppercase tracking-wider ${order.status === 'Bekliyor' ? 'bg-yellow-100 text-yellow-800' :
-                              order.status === 'Kargolandı' ? 'bg-blue-100 text-blue-800' :
-                                order.status === 'Tamamlandı' ? 'bg-green-100 text-green-800' :
-                                  'bg-gray-100 text-gray-800'
-                              }`}>
-                              {order.status || 'Bekliyor'}
-                            </span>
-                          </td>
-                          <td className="p-3 text-right">
-                            <button className="text-[#2271b1] hover:underline text-[12px]">Detaylar</button>
+                    </thead>
+                    <tbody>
+                      {isLoading ? (
+                        <tr>
+                          <td colSpan={6} className="p-8 text-center text-gray-500 font-bold">
+                            Siparişler yükleniyor...
                           </td>
                         </tr>
-                      ))
-                    )}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          )}
-          {activeTab === 'musteriler' && (
-            <div className="animate-fade-in">
-              <div className="flex items-center gap-4 mb-4">
-                <h1 className="text-[23px] font-normal text-[#1d2327]">Müşteriler</h1>
-              </div>
-              <div className="bg-white border border-[#c3c4c7] shadow-[0_1px_1px_rgba(0,0,0,0.04)] pb-10">
-                <table className="w-full text-left border-collapse">
-                  <thead>
-                    <tr className="border-b border-[#c3c4c7] text-[#2c3338] font-bold bg-[#f6f7f7]">
-                      <th className="p-3">Müşteri</th>
-                      <th className="p-3">E-posta</th>
-                      <th className="p-3">Telefon</th>
-                      <th className="p-3">Kayıt Tarihi</th>
-                      <th className="p-3 text-right">Toplam Harcama</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {isLoading ? (
-                      <tr>
-                        <td colSpan={5} className="p-8 text-center text-gray-500 font-bold">
-                          Müşteriler yükleniyor...
-                        </td>
-                      </tr>
-                    ) : customers.length === 0 ? (
-                      <tr>
-                        <td colSpan={5} className="p-8 text-center text-gray-500">
-                          Henüz kayıtlı müşteri bulunmuyor.
-                        </td>
-                      </tr>
-                    ) : (
-                      customers.map((customer) => (
-                        <tr key={customer.id} className="border-b border-[#f0f0f1] hover:bg-[#f6f7f7]">
-                          <td className="p-3 font-bold text-gray-800">
-                            {customer.full_name}
-                          </td>
-                          <td className="p-3 text-[#2271b1]">{customer.email}</td>
-                          <td className="p-3 text-gray-600">{customer.phone || '-'}</td>
-                          <td className="p-3 text-gray-500 text-[12px]">
-                            {new Date(customer.created_at).toLocaleDateString('tr-TR')}
-                          </td>
-                          <td className="p-3 text-right font-medium">
-                            {customer.total_spent || '0'} ₺
+                      ) : orders.length === 0 ? (
+                        <tr>
+                          <td colSpan={6} className="p-8 text-center text-gray-500">
+                            Henüz hiç sipariş bulunmuyor.
                           </td>
                         </tr>
-                      ))
-                    )}
-                  </tbody>
-                </table>
+                      ) : (
+                        orders.map((order) => (
+                          <tr key={order.id} className="border-b border-[#f0f0f1] hover:bg-[#f6f7f7]">
+                            <td className="p-3 font-bold text-[#2271b1]">
+                              #{order.id}
+                            </td>
+                            <td className="p-3">{order.customer_name || 'Misafir'}</td>
+                            <td className="p-3 text-[11px] text-gray-600">
+                              {(() => {
+                                try {
+                                  const items = typeof order.items === 'string' ? JSON.parse(order.items) : order.items;
+                                  if (!items || items.length === 0) return '-';
+                                  return (
+                                    <ul className="flex flex-col gap-2">
+                                      {items.map((item: any, idx: number) => (
+                                        <li key={idx} className="flex flex-col border border-zinc-150 p-2 bg-zinc-50 rounded-sm">
+                                          <div className="flex justify-between items-start mb-1">
+                                            <span className="font-semibold text-zinc-800 text-xs">
+                                              {item.quantity}x {item.name}
+                                            </span>
+                                          </div>
+                                          <div>
+                                            <span className="inline-block mt-0.5 px-2 py-0.5 bg-[#d4af37]/10 text-[#d4af37] border border-[#d4af37]/30 text-[9px] font-bold uppercase tracking-widest rounded-sm">
+                                              Satıcı: {item.vendor_name || 'Lumina Özel'}
+                                            </span>
+                                          </div>
+                                        </li>
+                                      ))}
+                                    </ul>
+                                  );
+                                } catch (e) {
+                                  return 'JSON Hata';
+                                }
+                              })()}
+                            </td>
+                            <td className="p-3 font-medium text-gray-700">{order.total_amount} ₺</td>
+                            <td className="p-3 text-gray-500 text-[12px]">
+                              {new Date(order.created_at).toLocaleDateString('tr-TR')}
+                            </td>
+                            <td className="p-3">
+                              {/* FIX: live status dropdown that updates Supabase */}
+                              <select
+                                defaultValue={order.status || 'Bekliyor'}
+                                onChange={async (e) => {
+                                  await supabase.from('orders').update({ status: e.target.value }).eq('id', order.id);
+                                  showToast('✅ Sipariş durumu güncellendi.');
+                                  fetchOrders();
+                                }}
+                                className={`px-2 py-1 text-[11px] font-bold rounded-sm uppercase tracking-wider border-0 cursor-pointer ${order.status === 'Bekliyor' ? 'bg-yellow-100 text-yellow-800' :
+                                  order.status === 'Kargolandı' ? 'bg-blue-100 text-blue-800' :
+                                    order.status === 'Tamamlandı' ? 'bg-green-100 text-green-800' :
+                                      'bg-gray-100 text-gray-800'
+                                  }`}
+                              >
+                                <option value="Bekliyor">Bekliyor</option>
+                                <option value="Hazırlanıyor">Hazırlanıyor</option>
+                                <option value="Kargolandı">Kargolandı</option>
+                                <option value="Tamamlandı">Tamamlandı</option>
+                                <option value="İptal">İptal</option>
+                              </select>
+                            </td>
+                            <td className="p-3 text-right">
+                              <a href={`mailto:${order.email}`} className="text-[#2271b1] hover:underline text-[12px]">
+                                E-posta Gönder
+                              </a>
+                            </td>
+                          </tr>
+                        ))
+                      )}
+                    </tbody>
+                  </table>
+                </div>
               </div>
-            </div>
-          )}
-          {activeTab === 'dashboard' && (
-            <div className="animate-fade-in">
-              <h1 className="text-[23px] font-normal text-[#1d2327] mb-6">Dashboard İstatistikleri</h1>
+            )
+          }
+          {
+            activeTab === 'musteriler' && (
+              <div className="animate-fade-in">
+                <div className="flex items-center gap-4 mb-4">
+                  <h1 className="text-[23px] font-normal text-[#1d2327]">Müşteriler</h1>
+                </div>
+                <div className="bg-white border border-[#c3c4c7] shadow-[0_1px_1px_rgba(0,0,0,0.04)] pb-10">
+                  <table className="w-full text-left border-collapse">
+                    <thead>
+                      <tr className="border-b border-[#c3c4c7] text-[#2c3338] font-bold bg-[#f6f7f7]">
+                        <th className="p-3">Müşteri</th>
+                        <th className="p-3">E-posta</th>
+                        <th className="p-3">Telefon</th>
+                        <th className="p-3">Kayıt Tarihi</th>
+                        <th className="p-3 text-right">Toplam Harcama</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {isLoading ? (
+                        <tr>
+                          <td colSpan={5} className="p-8 text-center text-gray-500 font-bold">
+                            Müşteriler yükleniyor...
+                          </td>
+                        </tr>
+                      ) : customers.length === 0 ? (
+                        <tr>
+                          <td colSpan={5} className="p-8 text-center text-gray-500">
+                            Henüz kayıtlı müşteri bulunmuyor.
+                          </td>
+                        </tr>
+                      ) : (
+                        customers.map((customer) => (
+                          <tr key={customer.id} className="border-b border-[#f0f0f1] hover:bg-[#f6f7f7]">
+                            <td className="p-3 font-bold text-gray-800">
+                              {customer.full_name}
+                            </td>
+                            <td className="p-3 text-[#2271b1]">{customer.email}</td>
+                            <td className="p-3 text-gray-600">{customer.phone || '-'}</td>
+                            <td className="p-3 text-gray-500 text-[12px]">
+                              {new Date(customer.created_at).toLocaleDateString('tr-TR')}
+                            </td>
+                            <td className="p-3 text-right font-medium">
+                              {customer.total_spent || '0'} ₺
+                            </td>
+                          </tr>
+                        ))
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )
+          }
+          {
+            activeTab === 'dashboard' && (
+              <div className="animate-fade-in">
+                <h1 className="text-[23px] font-normal text-[#1d2327] mb-6">Dashboard İstatistikleri</h1>
 
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-                <div className="bg-white border border-[#c3c4c7] p-5 shadow-sm border-l-4 border-l-[#2271b1]">
-                  <div className="text-gray-500 text-[11px] font-bold uppercase tracking-wider mb-2">Aylık Ciro</div>
-                  <div className="text-3xl font-normal text-[#1d2327]">
-                    {orders.reduce((sum, order) => sum + (Number(order.total_amount) || 0), 0).toLocaleString('tr-TR')} ₺
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                  <div className="bg-white border border-[#c3c4c7] p-5 shadow-sm border-l-4 border-l-[#2271b1]">
+                    <div className="text-gray-500 text-[11px] font-bold uppercase tracking-wider mb-2">Aylık Ciro</div>
+                    <div className="text-3xl font-normal text-[#1d2327]">
+                      {orders.reduce((sum, order) => sum + (Number(order.total_amount) || 0), 0).toLocaleString('tr-TR')} ₺
+                    </div>
+                  </div>
+                  <div className="bg-white border border-[#c3c4c7] p-5 shadow-sm border-l-4 border-l-green-500">
+                    <div className="text-gray-500 text-[11px] font-bold uppercase tracking-wider mb-2">Toplam Sipariş</div>
+                    <div className="text-3xl font-normal text-[#1d2327]">{orders.length}</div>
+                  </div>
+                  <div className="bg-white border border-[#c3c4c7] p-5 shadow-sm border-l-4 border-l-purple-500">
+                    <div className="text-gray-500 text-[11px] font-bold uppercase tracking-wider mb-2">Aktif Müşteri</div>
+                    <div className="text-3xl font-normal text-[#1d2327]">{customers.length}</div>
+                  </div>
+                  <div className="bg-white border border-[#c3c4c7] p-5 shadow-sm border-l-4 border-l-amber-500">
+                    <div className="text-gray-500 text-[11px] font-bold uppercase tracking-wider mb-2">Yayındaki Ürün</div>
+                    <div className="text-3xl font-normal text-[#1d2327]">{products.length}</div>
                   </div>
                 </div>
-                <div className="bg-white border border-[#c3c4c7] p-5 shadow-sm border-l-4 border-l-green-500">
-                  <div className="text-gray-500 text-[11px] font-bold uppercase tracking-wider mb-2">Toplam Sipariş</div>
-                  <div className="text-3xl font-normal text-[#1d2327]">{orders.length}</div>
-                </div>
-                <div className="bg-white border border-[#c3c4c7] p-5 shadow-sm border-l-4 border-l-purple-500">
-                  <div className="text-gray-500 text-[11px] font-bold uppercase tracking-wider mb-2">Aktif Müşteri</div>
-                  <div className="text-3xl font-normal text-[#1d2327]">{customers.length}</div>
-                </div>
-                <div className="bg-white border border-[#c3c4c7] p-5 shadow-sm border-l-4 border-l-amber-500">
-                  <div className="text-gray-500 text-[11px] font-bold uppercase tracking-wider mb-2">Yayındaki Ürün</div>
-                  <div className="text-3xl font-normal text-[#1d2327]">{products.length}</div>
-                </div>
+
+              </div>
+            )
+          }
+          {/* ===== MESAJLAR TAB ===== */}
+          {activeTab === 'mesajlar' && (
+            <div className="animate-fade-in">
+              <div className="flex items-center justify-between mb-6">
+                <h1 className="text-[23px] font-normal text-[#1d2327]">
+                  Gelen Mesajlar
+                  {unreadCount > 0 && (
+                    <span className="ml-3 bg-red-500 text-white text-sm font-bold px-2.5 py-0.5 rounded-full">{unreadCount} okunmamış</span>
+                  )}
+                </h1>
+                <button onClick={fetchMessages} className="text-[#2271b1] hover:underline text-sm">Yenile</button>
               </div>
 
+              {messages.length === 0 ? (
+                <div className="bg-white border border-[#c3c4c7] p-12 text-center text-gray-400">
+                  <div className="text-4xl mb-4">✉️</div>
+                  <p className="text-sm">Henüz mesaj yok.</p>
+                </div>
+              ) : (
+                <div className="flex flex-col gap-3">
+                  {messages.map((msg: any) => (
+                    <div
+                      key={msg.id}
+                      onClick={() => !msg.is_read && markAsRead(msg.id)}
+                      className={`bg-white border p-5 shadow-sm cursor-pointer hover:shadow-md transition-shadow ${!msg.is_read ? 'border-l-4 border-l-[#2271b1] border-[#c3c4c7]' : 'border-[#c3c4c7] opacity-70'}`}
+                    >
+                      <div className="flex justify-between items-start mb-3">
+                        <div className="flex items-center gap-3">
+                          {!msg.is_read && (
+                            <span className="w-2 h-2 rounded-full bg-[#2271b1] shrink-0" />
+                          )}
+                          <div>
+                            <p className="font-bold text-[#1d2327] text-sm">{msg.name}</p>
+                            <p className="text-xs text-zinc-500">{msg.email}{msg.phone ? ` · ${msg.phone}` : ''}</p>
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <span className="inline-block bg-zinc-100 text-zinc-600 text-[10px] font-bold px-2 py-0.5 rounded tracking-wider uppercase mb-1">{msg.subject || 'Genel'}</span>
+                          <p className="text-[10px] text-zinc-400">{msg.created_at ? new Date(msg.created_at).toLocaleString('tr-TR') : ''}</p>
+                        </div>
+                      </div>
+                      <p className="text-sm text-zinc-700 leading-relaxed border-t border-zinc-100 pt-3 whitespace-pre-wrap">{msg.message}</p>
+                      {!msg.is_read && (
+                        <p className="text-[10px] text-[#2271b1] mt-2 text-right">Tıklayarak okundu olarak işaretle →</p>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           )}
-        </div>
-      </main>
-    </div>
+        </div >
+      </main >
+    </div >
   );
 }
