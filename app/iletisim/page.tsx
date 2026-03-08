@@ -130,7 +130,7 @@ export default function ContactPage() {
                                     <h2 className="font-serif text-2xl text-zinc-900 mb-4 tracking-wide uppercase">Talebiniz Kayıt Altına Alınmıştır</h2>
                                     <p className="text-zinc-500 text-sm font-light leading-relaxed mt-4">
                                         Değerli müşterimiz, iletmiş olduğunuz talep kurumumuzca işleme alınmış olup, <br />
-                                        <b className="text-zinc-700 font-semibold tracking-wider">support@zeraygold.com.tr</b> üzerinden tarafınıza en kısa sürede resmi geri dönüş sağlanacaktır.
+                                        <b className="text-zinc-700 font-semibold tracking-wider">destek@zeraygold.com.tr</b> üzerinden tarafınıza en kısa sürede resmi geri dönüş sağlanacaktır.
                                     </p>
                                 </div>
                                 <button onClick={() => setSuccess(false)} className="text-[10px] font-bold tracking-[0.25em] uppercase border-b border-zinc-800 pb-1 hover:text-[#d4af37] hover:border-[#d4af37] transition-colors">
