@@ -1134,7 +1134,7 @@ export default function Home() {
                 )}
 
                 <p className="text-[9px] text-zinc-400 text-center mt-5 uppercase tracking-widest leading-relaxed px-4">
-                  Siparişi Tamamla'ya tıklayarak <Link href="#" className="underline hover:text-gold transition-colors">Mesafeli Satış Sözleşmesi'ni</Link> kabul etmiş olursunuz.
+                  Siparişi Tamamla'ya tıklayarak <Link href="/iade-sartlari" className="underline hover:text-gold transition-colors">Mesafeli Satış Sözleşmesi'ni</Link> kabul etmiş olursunuz.
                 </p>
               </div>
             </div>
@@ -1242,7 +1242,7 @@ export default function Home() {
               )}
               {authMode === 'login' && (
                 <div className="text-right">
-                  <a href="#" className="text-[10px] text-zinc-400 hover:text-gold uppercase tracking-widest transition-colors font-medium border-b border-transparent hover:border-gold pb-0.5">Şifremi Unuttum</a>
+                  <a href="/iletisim" className="text-[10px] text-zinc-400 hover:text-gold uppercase tracking-widest transition-colors font-medium border-b border-transparent hover:border-gold pb-0.5">Şifremi Unuttum</a>
                 </div>
               )}
               <button

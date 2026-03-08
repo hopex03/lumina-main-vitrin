@@ -16,7 +16,7 @@ const montserrat = Montserrat({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://zeraygold.com.tr'),
+  metadataBase: new URL('https://www.zeraygold.com.tr'),
   title: 'Zeray Gold | Premium Altın Takı & Mücevherat',
   description: 'Ustalıkla işlenmiş som altın koleksiyonları. Her parçada Türk kuyumculuk geleneği ve modern tasarım. Ücretsiz & sigortalı teslimat.',
   keywords: 'altın takı, mücevherat, altın kolye, altın yüzük, altın küpe, Zeray Gold',
