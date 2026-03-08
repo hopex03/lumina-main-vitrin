@@ -314,8 +314,9 @@ export default function Home() {
             </button>
           </div>
           <div className="flex-1 flex justify-center">
-            <Link href="/" className="group flex items-center justify-center transition-opacity hover:opacity-90 relative w-64 h-16">
-              <svg viewBox="0 0 100 85" className="absolute w-20 h-20 text-[#D4AF37] opacity-20 drop-shadow-sm group-hover:scale-110 transition-transform duration-700 z-0" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="miter">
+            <Link href="/" className="group flex items-center justify-center transition-opacity hover:opacity-90 relative w-[280px] h-[80px]">
+              {/* Opacity %15 to not interrupt readability, absolute centered */}
+              <svg viewBox="0 0 100 85" className="absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[52%] w-24 h-24 text-[#D4AF37] opacity-[0.15] drop-shadow-sm group-hover:scale-105 transition-transform duration-700 z-0" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinejoin="miter">
                 {/* Minimalist Interlocking Triangles Logo Behind Text */}
                 <path d="M50 10 L15 75 h70 Z" />
                 <path d="M35 10 L5 75 h30 M65 10 L95 75 h-30" />
