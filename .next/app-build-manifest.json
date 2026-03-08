@@ -1,20 +1,99 @@
 {
   "pages": {
+    "/layout": [
+      "static/chunks/webpack-e66475fa29aa8c21.js",
+      "static/chunks/fd9d1056-b34e90ae3fbd908b.js",
+      "static/chunks/69-a88dc7a4b3f8858b.js",
+      "static/chunks/main-app-52662e67ea6adaad.js",
+      "static/chunks/50-b70185686a483280.js",
+      "static/css/250b9d92e52636c3.css",
+      "static/chunks/app/layout-61256dd9e220c098.js"
+    ],
     "/not-found": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/not-found.js"
+      "static/chunks/webpack-e66475fa29aa8c21.js",
+      "static/chunks/fd9d1056-b34e90ae3fbd908b.js",
+      "static/chunks/69-a88dc7a4b3f8858b.js",
+      "static/chunks/main-app-52662e67ea6adaad.js",
+      "static/chunks/50-b70185686a483280.js",
+      "static/chunks/792-175a2ceac2e98e2c.js",
+      "static/chunks/app/not-found-e41c263812eed66e.js"
+    ],
+    "/detay/page": [
+      "static/chunks/webpack-e66475fa29aa8c21.js",
+      "static/chunks/fd9d1056-b34e90ae3fbd908b.js",
+      "static/chunks/69-a88dc7a4b3f8858b.js",
+      "static/chunks/main-app-52662e67ea6adaad.js",
+      "static/chunks/app/detay/page-dfbff070d244818e.js"
+    ],
+    "/iade-sartlari/page": [
+      "static/chunks/webpack-e66475fa29aa8c21.js",
+      "static/chunks/fd9d1056-b34e90ae3fbd908b.js",
+      "static/chunks/69-a88dc7a4b3f8858b.js",
+      "static/chunks/main-app-52662e67ea6adaad.js",
+      "static/chunks/50-b70185686a483280.js",
+      "static/chunks/792-175a2ceac2e98e2c.js",
+      "static/chunks/app/iade-sartlari/page-533c7d9260a67355.js"
+    ],
+    "/hakkimizda/page": [
+      "static/chunks/webpack-e66475fa29aa8c21.js",
+      "static/chunks/fd9d1056-b34e90ae3fbd908b.js",
+      "static/chunks/69-a88dc7a4b3f8858b.js",
+      "static/chunks/main-app-52662e67ea6adaad.js",
+      "static/chunks/50-b70185686a483280.js",
+      "static/chunks/792-175a2ceac2e98e2c.js",
+      "static/chunks/app/hakkimizda/page-18c048b84e68871e.js"
+    ],
+    "/iletisim/page": [
+      "static/chunks/webpack-e66475fa29aa8c21.js",
+      "static/chunks/fd9d1056-b34e90ae3fbd908b.js",
+      "static/chunks/69-a88dc7a4b3f8858b.js",
+      "static/chunks/main-app-52662e67ea6adaad.js",
+      "static/chunks/50-b70185686a483280.js",
+      "static/chunks/792-175a2ceac2e98e2c.js",
+      "static/chunks/688-eee36c7715b2f151.js",
+      "static/chunks/app/iletisim/page-20e083895e741c95.js"
     ],
     "/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/page.js"
+      "static/chunks/webpack-e66475fa29aa8c21.js",
+      "static/chunks/fd9d1056-b34e90ae3fbd908b.js",
+      "static/chunks/69-a88dc7a4b3f8858b.js",
+      "static/chunks/main-app-52662e67ea6adaad.js",
+      "static/chunks/50-b70185686a483280.js",
+      "static/chunks/792-175a2ceac2e98e2c.js",
+      "static/chunks/688-eee36c7715b2f151.js",
+      "static/chunks/app/page-ee0d7cc1d29798d1.js"
     ],
-    "/layout": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/layout.css",
-      "static/chunks/app/layout.js"
+    "/urun/[id]/page": [
+      "static/chunks/webpack-e66475fa29aa8c21.js",
+      "static/chunks/fd9d1056-b34e90ae3fbd908b.js",
+      "static/chunks/69-a88dc7a4b3f8858b.js",
+      "static/chunks/main-app-52662e67ea6adaad.js",
+      "static/chunks/50-b70185686a483280.js",
+      "static/chunks/792-175a2ceac2e98e2c.js",
+      "static/chunks/688-eee36c7715b2f151.js",
+      "static/chunks/app/urun/[id]/page-b6f51075eede5cba.js"
+    ],
+    "/admin/page": [
+      "static/chunks/webpack-e66475fa29aa8c21.js",
+      "static/chunks/fd9d1056-b34e90ae3fbd908b.js",
+      "static/chunks/69-a88dc7a4b3f8858b.js",
+      "static/chunks/main-app-52662e67ea6adaad.js",
+      "static/chunks/688-eee36c7715b2f151.js",
+      "static/chunks/app/admin/page-ae5340dc60a49a87.js"
+    ],
+    "/admin/layout": [
+      "static/chunks/webpack-e66475fa29aa8c21.js",
+      "static/chunks/fd9d1056-b34e90ae3fbd908b.js",
+      "static/chunks/69-a88dc7a4b3f8858b.js",
+      "static/chunks/main-app-52662e67ea6adaad.js",
+      "static/chunks/app/admin/layout-d72df9f9eea26cbc.js"
+    ],
+    "/admin/urunler/page": [
+      "static/chunks/webpack-e66475fa29aa8c21.js",
+      "static/chunks/fd9d1056-b34e90ae3fbd908b.js",
+      "static/chunks/69-a88dc7a4b3f8858b.js",
+      "static/chunks/main-app-52662e67ea6adaad.js",
+      "static/chunks/app/admin/urunler/page-d39a0dc5791a92dc.js"
     ]
   }
 }

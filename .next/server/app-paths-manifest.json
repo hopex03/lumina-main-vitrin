@@ -1,4 +1,13 @@
 {
+  "/detay/page": "app/detay/page.js",
+  "/_not-found": "app/_not-found.js",
+  "/iade-sartlari/page": "app/iade-sartlari/page.js",
+  "/hakkimizda/page": "app/hakkimizda/page.js",
+  "/icon.svg/route": "app/icon.svg/route.js",
+  "/sitemap.xml/route": "app/sitemap.xml/route.js",
+  "/iletisim/page": "app/iletisim/page.js",
   "/page": "app/page.js",
-  "/favicon.ico/route": "app/favicon.ico/route.js"
+  "/urun/[id]/page": "app/urun/[id]/page.js",
+  "/admin/page": "app/admin/page.js",
+  "/admin/urunler/page": "app/admin/urunler/page.js"
 }

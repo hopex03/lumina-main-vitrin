@@ -38,13 +38,34 @@ export default function Home() {
     if (savedWishlist) setWishlist(JSON.parse(savedWishlist));
 
     const checkOpenCart = () => {
-      const isCartMode = new URLSearchParams(window.location.search).get('openCart');
+      const params = new URLSearchParams(window.location.search);
+      const isCartMode = params.get('openCart');
       if (isCartMode === 'true') {
         setIsCartOpen(true);
-        window.history.replaceState({}, document.title, window.location.pathname);
+        params.delete('openCart');
+        const newUrl = params.toString() ? `/?${params.toString()}` : '/';
+        window.history.replaceState({}, document.title, newUrl);
+      }
+
+      const categoryFromUrl = params.get('category');
+      if (categoryFromUrl) {
+        setSelectedCategory(categoryFromUrl);
+        setTimeout(() => {
+          const element = document.getElementById('products-section');
+          if (element) {
+            const y = element.getBoundingClientRect().top + window.scrollY - 80;
+            window.scrollTo({ top: y, behavior: 'smooth' });
+          }
+        }, 500);
       }
     };
     checkOpenCart();
+
+    // KATEGORİ SEÇİM MERKEZİ
+    window.addEventListener('popstate', () => {
+      const params = new URLSearchParams(window.location.search);
+      setSelectedCategory(params.get('category') || 'Hepsi');
+    });
 
     // YENİ EKLENEN EVENT LİSTENER
     const handleOpenWishlist = () => setIsWishlistOpen(true);
@@ -55,6 +76,25 @@ export default function Home() {
       window.removeEventListener('open-wishlist', handleOpenWishlist);
     };
   }, []);
+
+  // KATEGORİ DEĞİŞTİRME VE URL SENKRONİZASYONU
+  const handleCategoryChange = (cat: string) => {
+    setSelectedCategory(cat);
+    const params = new URLSearchParams(window.location.search);
+    if (cat === 'Hepsi') {
+      params.delete('category');
+    } else {
+      params.set('category', cat);
+    }
+    const newUrl = params.toString() ? `/?${params.toString()}` : '/';
+    window.history.pushState({}, '', newUrl);
+
+    const element = document.getElementById('products-section');
+    if (element) {
+      const y = element.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+  };
 
   // SUPABASE'DEN GERÇEK ÜRÜNLERİ ÇEKME
   useEffect(() => {
@@ -79,13 +119,10 @@ export default function Home() {
       content: (
         <div className="text-center px-4 animate-fade-in relative z-20">
           <p className="text-white text-4xl md:text-6xl font-serif max-w-4xl drop-shadow-[0_5px_15px_rgba(0,0,0,0.8)] mb-8">
-            <span className="text-gradient-gold">Işıltınızı</span> Keşfedin.
+            <span className="text-gradient-gold">Zeray Gold</span> | Ustalığın Estetikle Buluştuğu Nokta
           </p>
           <button
-            onClick={() => {
-              setSelectedCategory('Hepsi');
-              window.scrollTo({ top: document.body.scrollHeight / 2, behavior: 'smooth' });
-            }}
+            onClick={() => handleCategoryChange('Hepsi')}
             className="bg-gradient-to-r from-gold-dark via-gold to-gold-dark text-white px-12 py-4 text-xs font-bold tracking-[0.3em] hover:shadow-[0_0_20px_rgba(212,175,55,0.6)] transition-all duration-500 hover:scale-105"
           >
             KOLEKSİYONU İNCELE
@@ -392,7 +429,7 @@ export default function Home() {
             <Link href="/iletisim" className="text-xs font-bold tracking-widest uppercase text-zinc-600 hover:text-[#d4af37] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Bize Ulaşın</Link>
             <div className="h-px bg-zinc-100" />
             {['Hepsi', 'Saat', 'Bileklik', 'Kolye', 'Yüzük', 'Küpe'].map(cat => (
-              <button key={cat} onClick={() => { setSelectedCategory(cat); setIsMobileMenuOpen(false); }}
+              <button key={cat} onClick={() => { handleCategoryChange(cat); setIsMobileMenuOpen(false); }}
                 className={`text-xs font-bold tracking-widest uppercase text-left transition-colors ${selectedCategory === cat ? 'text-[#d4af37]' : 'text-zinc-500'}`}>
                 {cat}
               </button>
@@ -415,7 +452,7 @@ export default function Home() {
             (cat) => (
               <button
                 key={cat}
-                onClick={() => setSelectedCategory(cat)}
+                onClick={() => handleCategoryChange(cat)}
                 className={`whitespace-nowrap transition-all duration-300 py-1 ${selectedCategory === cat
                   ? 'text-gold border-b-2 border-gold'
                   : 'text-gray-500 hover:text-dark'
@@ -719,7 +756,7 @@ export default function Home() {
       </section>
 
       {/* ÜRÜNLER VİTRİNİ */}
-      <section className="bg-white pt-24 pb-16 relative">
+      <section id="products-section" className="bg-white pt-24 pb-16 relative">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-5xl font-serif text-dark mb-4 uppercase tracking-[0.1em]">
