@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     siteName: 'Zeray Gold',
     images: [
       {
-        url: '/og-image.png',
+        url: '/opengraph-image.png',
         width: 1200,
         height: 630,
         alt: 'Zeray Gold | Üç Atölyenin Ortak Işıltısı',
