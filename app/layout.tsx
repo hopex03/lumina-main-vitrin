@@ -53,8 +53,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="tr">
-      <body className={`${montserrat.variable} ${playfair.variable} font-sans bg-white text-zinc-900 antialiased relative`}>
+    <html lang="tr" className="overflow-x-hidden">
+      <body className={`${montserrat.variable} ${playfair.variable} font-sans bg-white text-zinc-900 antialiased relative overflow-x-hidden`}>
         {children}
 
         {/* FLOATING WHATSAPP BUTTON */}
