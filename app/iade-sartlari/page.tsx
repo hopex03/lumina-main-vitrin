@@ -70,7 +70,7 @@ export default function ReturnPolicyPage() {
                             <ul className="space-y-2 text-sm text-zinc-800">
                                 <li><strong>Kurum:</strong> Zeray Gold Sanal Mağaza ve Operasyon Merkezi</li>
                                 <li><strong>Telefon:</strong> 0850 XXX XX XX</li>
-                                <li><strong>E-Posta:</strong> info@zeraygold.com.tr</li>
+                                <li><strong>E-Posta:</strong> destek@zeraygold.com.tr</li>
                                 <li><strong>Adres:</strong> Nişantaşı Merkez Mah. Teşvikiye Cad. No:X Şişli / İstanbul (Örnektir, Kargo Gönderimi için Yetkili Onayı Alınmalıdır)</li>
                             </ul>
                             <p className="text-xs text-zinc-500 mt-4 font-light gap-2 flex items-center">

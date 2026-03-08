@@ -82,7 +82,7 @@ export default function ContactPage() {
                         <p className="text-[#d4af37] text-[10px] tracking-[0.4em] uppercase font-bold mb-4">İletişim Bilgileri</p>
                         <div className="space-y-6">
                             {[
-                                { label: 'E-Posta', value: 'info@zeraygold.com.tr', href: 'mailto:info@zeraygold.com.tr' },
+                                { label: 'E-Posta', value: 'destek@zeraygold.com.tr', href: 'mailto:destek@zeraygold.com.tr' },
                                 { label: 'Telefon', value: '+90 (532) 000 00 00', href: 'tel:+905320000000' },
                                 { label: 'Adres', value: 'İstanbul, Türkiye', href: '#' },
                             ].map(item => (
