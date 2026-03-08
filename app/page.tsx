@@ -89,11 +89,19 @@ export default function Home() {
     const newUrl = params.toString() ? `/?${params.toString()}` : '/';
     window.history.pushState({}, '', newUrl);
 
-    const element = document.getElementById('products-section');
-    if (element) {
-      const y = element.getBoundingClientRect().top + window.scrollY - 80;
-      window.scrollTo({ top: y, behavior: 'smooth' });
-    }
+    setTimeout(() => {
+      const element = document.getElementById('products-section');
+      if (element) {
+        const offset = 100; // Sticky header offset
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.scrollY - offset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth"
+        });
+      }
+    }, 100);
   };
 
   // SUPABASE'DEN GERÇEK ÜRÜNLERİ ÇEKME
