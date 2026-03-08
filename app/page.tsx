@@ -314,14 +314,14 @@ export default function Home() {
             </button>
           </div>
           <div className="flex-1 flex justify-center">
-            <Link href="/" className="group flex flex-col items-center gap-1.5 transition-opacity hover:opacity-90">
-              <svg viewBox="0 0 100 85" className="w-12 h-10 text-[#D4AF37] drop-shadow-md group-hover:scale-105 transition-transform duration-500" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinejoin="miter">
-                {/* Minimalist Interlocking Triangles Logo */}
+            <Link href="/" className="group flex items-center justify-center transition-opacity hover:opacity-90 relative w-64 h-16">
+              <svg viewBox="0 0 100 85" className="absolute w-20 h-20 text-[#D4AF37] opacity-20 drop-shadow-sm group-hover:scale-110 transition-transform duration-700 z-0" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="miter">
+                {/* Minimalist Interlocking Triangles Logo Behind Text */}
                 <path d="M50 10 L15 75 h70 Z" />
                 <path d="M35 10 L5 75 h30 M65 10 L95 75 h-30" />
                 <path d="M25 45 L50 85 L75 45" />
               </svg>
-              <span className="text-xl md:text-2xl font-serif tracking-[0.3em] font-black bg-clip-text text-transparent bg-dark-gradient uppercase">
+              <span className="relative z-10 text-2xl md:text-3xl font-serif tracking-[0.25em] font-black bg-clip-text text-transparent bg-dark-gradient uppercase">
                 Zeray Gold
               </span>
             </Link>
