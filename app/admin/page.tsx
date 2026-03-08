@@ -160,7 +160,7 @@ export default function AdminPanel() {
     const productData: any = {
       name: (formData.get('name') as string) || 'İsimsiz Ürün',
       category: selectedCategory,
-      vendor_name: (formData.get('vendor_name') as string) || 'Lumina Özel',
+      vendor_name: (formData.get('vendor_name') as string) || 'Zeray Gold Özel',
       price: (formData.get('price') as string) || '0',
       sale_price: salePriceRaw !== '' ? salePriceRaw : null,
       stock: finalStock,
