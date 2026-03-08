@@ -303,10 +303,10 @@ export default function Home() {
           <div className="flex-1 hidden md:flex gap-6 text-[10px] font-bold tracking-[0.2em] text-gray-500 uppercase">
             <div className="flex items-center gap-3">
               <Link href="/iletisim" className="hover:text-dark transition-colors">İletişim</Link>
-              {/* Temporary Romantic Gesture */}
-              <div className="flex items-center gap-1 opacity-80 hover:opacity-100 transition-opacity" title="Efe'den...">
-                <span className="text-blue-500 font-serif font-black text-xl" style={{ WebkitTextStroke: '1px #3b82f6', color: 'transparent' }}>E</span>
-                <svg className="w-5 h-5 text-blue-500 fill-current" viewBox="0 0 24 24">
+              {/* Temporary Romantic Gesture - HIGH VISIBILITY */}
+              <div className="flex items-center gap-2 opacity-100 transition-opacity animate-pulse ml-4" title="Efe'den...">
+                <span className="text-blue-500 font-serif font-black text-3xl md:text-4xl drop-shadow-[0_0_8px_rgba(59,130,246,0.6)]" style={{ WebkitTextStroke: '2px #3b82f6', color: 'transparent' }}>E</span>
+                <svg className="w-8 h-8 md:w-10 md:h-10 text-blue-500 fill-current drop-shadow-[0_0_8px_rgba(59,130,246,0.6)]" viewBox="0 0 24 24">
                   <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
                 </svg>
               </div>
