@@ -317,8 +317,8 @@ export default function Home() {
               </div>
             </div>
           </div>
-          {/* MOBIL HAMBURGER */}
-          <div className="flex md:hidden flex-1">
+          {/* MOBIL HAMBURGER & JEST */}
+          <div className="flex md:hidden flex-1 items-center gap-3">
             <button
               onClick={() => setIsMobileMenuOpen(p => !p)}
               className="text-2xl text-zinc-700 hover:text-[#d4af37] transition-colors w-8 h-8 flex items-center justify-center"
@@ -326,6 +326,17 @@ export default function Home() {
             >
               {isMobileMenuOpen ? '×' : '☰'}
             </button>
+
+            {/* Mobile Romantic Gesture */}
+            <div className="flex items-center gap-0.5 opacity-100 transition-opacity group cursor-pointer relative" title="Sonsuz sevgilerle...">
+              <span className="relative z-10 font-serif italic text-2xl drop-shadow-[0_0_6px_rgba(59,130,246,0.5)]"
+                style={{ color: 'transparent', WebkitTextStroke: '1.5px #3b82f6', letterSpacing: '-0.05em' }}>
+                E
+              </span>
+              <svg className="relative z-10 w-5 h-5 text-blue-500 fill-current drop-shadow-[0_0_8px_rgba(59,130,246,0.7)] animate-pulse" viewBox="0 0 24 24">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+              </svg>
+            </div>
           </div>
           <div className="flex-1 flex justify-center">
             <Link href="/" className="group flex items-center justify-center transition-opacity hover:opacity-90 relative w-[280px] h-[80px]">
@@ -342,29 +353,35 @@ export default function Home() {
             </Link>
           </div>
 
-          <div className="flex-1 flex justify-end gap-5">
+          <div className="flex-1 flex justify-end items-center gap-4 md:gap-5">
             <button
               onClick={() => setIsAuthOpen(true)}
-              className="text-[11px] font-semibold tracking-widest uppercase flex items-center gap-1.5 hover:text-gold transition-colors hidden md:flex"
+              className="text-[11px] font-semibold tracking-widest uppercase flex items-center gap-1.5 text-zinc-700 hover:text-gold transition-colors"
+              title="Hesabım"
             >
-              HESABIM
+              <svg className="w-[18px] h-[18px] md:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" /></svg>
+              <span className="hidden md:inline">HESABIM</span>
             </button>
             <button
               onClick={() => {
-                // open wishlist drawer via a state
                 const e = new CustomEvent('open-wishlist');
                 window.dispatchEvent(e);
               }}
-              className="text-[11px] font-bold tracking-widest uppercase flex items-center gap-1.5 hover:text-gold transition-colors relative hidden md:flex"
+              className="text-[11px] font-bold tracking-widest uppercase flex items-center gap-1.5 text-zinc-700 hover:text-gold transition-colors relative"
+              title="Favoriler"
             >
-              <svg className="w-3.5 h-3.5" fill={wishlist.length > 0 ? 'currentColor' : 'none'} stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" /></svg>
-              FAVORİLER{wishlist.length > 0 && <span className="bg-gold text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center">{wishlist.length}</span>}
+              <svg className="w-[18px] h-[18px] md:w-3.5 md:h-3.5" fill={wishlist.length > 0 ? 'currentColor' : 'none'} stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" /></svg>
+              <span className="hidden md:inline">FAVORİLER</span>
+              {wishlist.length > 0 && <span className="bg-gold text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center absolute -top-2 -right-2 md:-top-2 md:-right-3">{wishlist.length}</span>}
             </button>
             <button
               onClick={() => setIsCartOpen(true)}
-              className="text-[11px] font-bold tracking-widest uppercase flex items-center gap-1.5 hover:text-gold transition-colors relative"
+              className="text-[11px] font-bold tracking-widest uppercase flex items-center gap-1.5 text-zinc-700 hover:text-gold transition-colors relative"
+              title="Sepetim"
             >
-              SEPETİM {totalItems > 0 && <span className="bg-gold text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center absolute -top-2 -right-3">{totalItems}</span>}
+              <svg className="w-[18px] h-[18px] md:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" /></svg>
+              <span className="hidden md:inline">SEPETİM</span>
+              {totalItems > 0 && <span className="bg-gold text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center absolute -top-2 -right-2 md:-top-2 md:-right-3">{totalItems}</span>}
             </button>
           </div>
         </div>
