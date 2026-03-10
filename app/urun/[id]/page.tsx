@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { supabase } from '../../lib/supabase';
 import { motion, AnimatePresence, useMotionValue, useTransform } from 'framer-motion';
 import WhatsAppButton from '@/components/WhatsAppButton';
+import GlobalFooter from '@/components/GlobalFooter';
 
 const formatPrice = (price: any) =>
   Number(price).toLocaleString('tr-TR') + ' ₺';
@@ -687,10 +688,7 @@ export default function ProductDetail() {
         </section>
       )}
 
-      {/* FOOTER */}
-      <footer className="bg-black py-10 text-center text-[10px] text-zinc-600 tracking-[0.3em] uppercase border-t border-zinc-800">
-        © 2026 <span className="text-[#d4af37]/70">ZERAY GOLD</span> JEWELRY. TÜM HAKLARI SAKLIDIR.
-      </footer>
+      <GlobalFooter />
     </div>
   );
 }

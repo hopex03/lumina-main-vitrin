@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { supabase } from '../lib/supabase';
 import { motion, AnimatePresence } from 'framer-motion';
+import GlobalFooter from '../../components/GlobalFooter';
 
 export default function ContactPage() {
     const [form, setForm] = useState({ name: '', email: '', phone: '', subject: '', message: '' });
@@ -205,10 +206,7 @@ export default function ContactPage() {
                 </motion.div>
             </section>
 
-            {/* FOOTER MINI */}
-            <footer className="bg-zinc-950 border-t border-zinc-800 py-8 text-center">
-                <p className="text-[10px] text-zinc-500 tracking-[0.2em] uppercase">© 2026 <span className="text-[#d4af37]/70">ZERAY GOLD</span> JEWELRY</p>
-            </footer>
+            <GlobalFooter />
         </div>
     );
 }
