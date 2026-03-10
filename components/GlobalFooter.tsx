@@ -38,7 +38,7 @@ export default function GlobalFooter() {
           <div>
             <h4 className="text-[11px] font-bold tracking-[0.2em] uppercase mb-8 text-white">Güvenli Alışveriş</h4>
             <p className="text-gray-400 text-xs leading-relaxed mb-6 font-light">
-              Tüm gönderiler sigortalı kurye ile 3 iş günü içinde usta onayından geçerek kargolanır.
+              Tüm gönderiler sigortalı kurye ile 1 ila 4 iş günü içerisinde kargolanır.
             </p>
             <div className="flex gap-3 items-center opacity-60 mix-blend-screen">
               <div className="text-[10px] font-bold border border-zinc-700 px-3 py-1.5 tracking-widest uppercase">SSL</div>

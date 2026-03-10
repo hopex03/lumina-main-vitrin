@@ -6,7 +6,7 @@ export const corporateData = {
   },
   teslimatVeKargo: {
     title: "Teslimat ve Kargo",
-    logisticsLogic: "Tüm gönderiler sigortalı kurye ile 3 iş günü içinde usta onayından geçerek kargolanır.",
+    logisticsLogic: "Tüm gönderiler sigortalı kurye ile 1 ila 4 iş günü içerisinde teslim edilir.",
     content: "Siparişleriniz, tamamen güvenli ve VIP taşıma sertifikalı özel kargo şirketleriyle kapınıza kadar sigortalı gönderilir."
   },
   iadeVeDegisim: {

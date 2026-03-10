@@ -414,7 +414,7 @@ export default function Home() {
           <div className="md:hidden bg-white border-t border-zinc-100 px-6 py-4 flex flex-col gap-4 animate-fade-in">
             <Link href="/iletisim" className="text-xs font-bold tracking-widest uppercase text-zinc-600 hover:text-[#d4af37] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Bize Ulaşın</Link>
             <div className="h-px bg-zinc-100" />
-            {['Hepsi', 'Saat', 'Bileklik', 'Kolye', 'Yüzük', 'Küpe'].map(cat => (
+            {['Hepsi', 'Bileklik', 'Kolye', 'Yüzük', 'Küpe', 'Saat'].map(cat => (
               <button key={cat} onClick={() => { handleCategoryChange(cat); setIsMobileMenuOpen(false); }}
                 className={`text-xs font-bold tracking-widest uppercase text-left transition-colors ${selectedCategory === cat ? 'text-[#d4af37]' : 'text-zinc-500'}`}>
                 {cat}
@@ -434,7 +434,7 @@ export default function Home() {
 
         {/* KATEGORİ NAV */}
         <div className="flex justify-center gap-6 md:gap-12 overflow-x-auto text-sm font-bold tracking-[0.15em] uppercase pb-2 scrollbar-hide border-t border-gray-50 pt-5">
-          {['Hepsi', 'Saat', 'Bileklik', 'Kolye', 'Yüzük', 'Küpe'].map(
+          {['Hepsi', 'Bileklik', 'Kolye', 'Yüzük', 'Küpe', 'Saat'].map(
             (cat) => (
               <button
                 key={cat}

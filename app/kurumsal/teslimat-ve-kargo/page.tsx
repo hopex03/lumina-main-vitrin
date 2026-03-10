@@ -36,7 +36,7 @@ export default function TeslimatKargoPage() {
         <div>
           <h2 className="text-xl font-bold tracking-widest uppercase text-dark mb-4 drop-shadow-sm">Teslim Süreleri</h2>
           <p className="text-zinc-600 font-light leading-relaxed">
-            Aksi belirtilmedikçe siparişiniz, 1-3 iş günü içerisinde kargo firmasına teslim edilir. Teslimat süresi şehrinize göre 12 ile 48 saat arasında değişiklik gösterebilir.
+            Aksi belirtilmedikçe siparişiniz, 1 ila 4 iş günü içerisinde kargo firmasına teslim edilir. Teslimat süresi şehrinize göre 12 ile 48 saat arasında değişiklik gösterebilir.
           </p>
         </div>
       </div>
