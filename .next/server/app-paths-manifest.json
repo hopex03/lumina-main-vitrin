@@ -1,4 +1,17 @@
 {
+  "/_not-found": "app/_not-found.js",
+  "/icon.svg/route": "app/icon.svg/route.js",
+  "/detay/page": "app/detay/page.js",
+  "/iletisim/page": "app/iletisim/page.js",
   "/zeray-gold/page": "app/zeray-gold/page.js",
-  "/icon.svg/route": "app/icon.svg/route.js"
+  "/urun/[id]/page": "app/urun/[id]/page.js",
+  "/page": "app/page.js",
+  "/sitemap.xml/route": "app/sitemap.xml/route.js",
+  "/admin/page": "app/admin/page.js",
+  "/kurumsal/kvkk/page": "app/kurumsal/kvkk/page.js",
+  "/admin/urunler/page": "app/admin/urunler/page.js",
+  "/kurumsal/teslimat-ve-kargo/page": "app/kurumsal/teslimat-ve-kargo/page.js",
+  "/kurumsal/kullanim-kosullari/page": "app/kurumsal/kullanim-kosullari/page.js",
+  "/kurumsal/iade-ve-degisim/page": "app/kurumsal/iade-ve-degisim/page.js",
+  "/kurumsal/hakkimizda/page": "app/kurumsal/hakkimizda/page.js"
 }

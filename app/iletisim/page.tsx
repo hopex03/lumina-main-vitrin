@@ -31,6 +31,18 @@ export default function ContactPage() {
                 created_at: new Date().toISOString(),
             }]);
             if (dbErr) throw dbErr;
+
+            // E-posta bildirimi için API tetiklemesi
+            const mailRes = await fetch('/api/contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(form)
+            });
+
+            if (!mailRes.ok) {
+                console.warn('Mail fetch failed, but saved to DB');
+            }
+
             setSuccess(true);
             setForm({ name: '', email: '', phone: '', subject: '', message: '' });
         } catch (err: any) {
@@ -84,7 +96,7 @@ export default function ContactPage() {
                         <div className="space-y-6">
                             {[
                                 { label: 'E-Posta', value: 'destek@zeraygold.com.tr', href: 'mailto:destek@zeraygold.com.tr' },
-                                { label: 'Telefon', value: '+90 (532) 000 00 00', href: 'tel:+905320000000' },
+                                { label: 'Telefon', value: '+90 (553) 746 78 70', href: 'tel:+905537467870' },
                                 { label: 'Adres', value: 'İstanbul, Türkiye', href: '#' },
                             ].map(item => (
                                 <div key={item.label}>

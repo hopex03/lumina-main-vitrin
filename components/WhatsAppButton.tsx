@@ -8,12 +8,12 @@ interface WhatsAppButtonProps {
 }
 
 export default function WhatsAppButton({ productName, variant = 'floating' }: WhatsAppButtonProps) {
-    const phoneNumber = "905353658468"; // Destek Hattı
+    const phoneNumber = "905537467870"; // Destek Hattı
 
     // Dynamic text generation based on product context
     const text = productName
-        ? `Zeray Gold Mücevherat Destek Merkezi: ${productName} hakkında bilgi almak istiyorum.`
-        : `Merhaba Zeray Gold, seçtiğim mücevherler hakkında özel destek almak istiyorum.`;
+        ? `Merhaba, ${productName} hakkında bilgi almak istiyorum.`
+        : `Merhaba, ürünleriniz hakkında bilgi almak istiyorum.`;
 
     const encodedText = encodeURIComponent(text);
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedText}`;
@@ -58,7 +58,7 @@ export default function WhatsAppButton({ productName, variant = 'floating' }: Wh
         >
             {icon}
             <span className="absolute right-16 bg-white text-zinc-800 text-xs font-bold py-2 px-4 rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap hidden md:block border border-zinc-100">
-                Zeray Gold Executive Support ✦
+                WhatsApp Destek Hattı ✦
             </span>
         </motion.a>
     );
