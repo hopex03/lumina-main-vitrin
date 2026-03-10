@@ -348,21 +348,9 @@ export default function Home() {
           <div className="flex-1 hidden md:flex gap-6 text-[10px] font-bold tracking-[0.2em] text-gray-500 uppercase">
             <div className="flex items-center gap-3">
               <Link href="/iletisim" className="hover:text-dark transition-colors">İletişim</Link>
-              {/* Temporary Romantic Gesture */}
-              <div className="flex items-center gap-1 opacity-100 transition-opacity ml-4 group cursor-pointer relative" title="Sonsuz sevgilerle...">
-                {/* İçi Boş E (Outlined) */}
-                <span className="relative z-10 font-serif italic text-3xl drop-shadow-[0_0_8px_rgba(59,130,246,0.6)]"
-                  style={{ color: 'transparent', WebkitTextStroke: '2px #3b82f6', letterSpacing: '-0.05em' }}>
-                  E
-                </span>
-                {/* İçi Dolu Mavi Kalp */}
-                <svg className="relative z-10 w-6 h-6 text-blue-500 fill-current drop-shadow-[0_0_10px_rgba(59,130,246,0.8)] animate-pulse" viewBox="0 0 24 24">
-                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-                </svg>
-              </div>
             </div>
           </div>
-          {/* MOBIL HAMBURGER & JEST */}
+          {/* MOBIL HAMBURGER */}
           <div className="flex md:hidden flex-1 items-center gap-3">
             <button
               onClick={() => setIsMobileMenuOpen(p => !p)}
@@ -371,17 +359,6 @@ export default function Home() {
             >
               {isMobileMenuOpen ? '×' : '☰'}
             </button>
-
-            {/* Mobile Romantic Gesture */}
-            <div className="flex items-center gap-0.5 opacity-100 transition-opacity group cursor-pointer relative" title="Sonsuz sevgilerle...">
-              <span className="relative z-10 font-serif italic text-2xl drop-shadow-[0_0_6px_rgba(59,130,246,0.5)]"
-                style={{ color: 'transparent', WebkitTextStroke: '1.5px #3b82f6', letterSpacing: '-0.05em' }}>
-                E
-              </span>
-              <svg className="relative z-10 w-5 h-5 text-blue-500 fill-current drop-shadow-[0_0_8px_rgba(59,130,246,0.7)] animate-pulse" viewBox="0 0 24 24">
-                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-              </svg>
-            </div>
           </div>
           <div className="flex-1 flex justify-center">
             <Link href="/" className="group flex items-center justify-center transition-opacity hover:opacity-90 relative w-[280px] h-[80px]">
