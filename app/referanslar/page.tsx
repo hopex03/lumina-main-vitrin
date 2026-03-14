@@ -7,24 +7,17 @@ import GlobalFooter from '../../components/GlobalFooter';
 const references = [
     {
         id: 1,
-        name: 'Giresun Merkez Atölye',
+        name: 'Atar Kuyumculuk',
         image: '/references/ref-1.png',
-        address: 'Hacı Siyam, Giresun, Türkiye',
-        googleMapsUrl: 'https://maps.google.com/?q=Giresun',
+        address: 'Şeyh Keramettin, Gazi Cd. No: 6/A, 28000 Giresun Merkez/Giresun',
+        googleMapsUrl: 'https://maps.google.com/?q=%C5%9Eeyh+Keramettin,+Gazi+Cd.+No:+6/A,+28000+Giresun+Merkez/Giresun',
     },
     {
         id: 2,
-        name: 'Zeray Gold Vitrin - Giresun',
+        name: 'Fatih Kuyumculuk',
         image: '/references/ref-2.png',
-        address: 'Atatürk Bulvarı, Giresun, Türkiye',
-        googleMapsUrl: 'https://maps.google.com/?q=Giresun',
-    },
-    {
-        id: 3,
-        name: 'Zeray Gold Tasarım Ofisi',
-        image: '/references/ref-3.png',
-        address: 'Nizamiye, Giresun, Türkiye',
-        googleMapsUrl: 'https://maps.google.com/?q=Giresun',
+        address: 'Sultan Selim, Arifbey Cd. no:4/c, 28100 Giresun Merkez/Giresun',
+        googleMapsUrl: 'https://maps.google.com/?q=Sultan+Selim,+Arifbey+Cd.+no:4/c,+28100+Giresun+Merkez/Giresun',
     },
 ];
 
@@ -42,7 +35,16 @@ export default function ReferencesPage() {
                     <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
                     Ana Sayfa
                 </Link>
-                <Link href="/" className="text-2xl md:text-3xl font-serif tracking-[0.35em] text-black">ZERAY GOLD</Link>
+                <Link href="/" className="group flex items-center justify-center transition-opacity hover:opacity-90 relative w-[200px] h-[60px]">
+                    <svg viewBox="0 0 100 85" className="absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[52%] w-16 h-16 text-[#D4AF37] opacity-[0.15] drop-shadow-sm group-hover:scale-105 transition-transform duration-700 z-0" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinejoin="miter">
+                        <path d="M50 10 L15 75 h70 Z" />
+                        <path d="M35 10 L5 75 h30 M65 10 L95 75 h-30" />
+                        <path d="M25 45 L50 85 L75 45" />
+                    </svg>
+                    <span className="relative z-10 text-xl md:text-2xl font-serif tracking-[0.25em] font-black bg-clip-text text-transparent bg-dark-gradient uppercase">
+                        Zeray Gold
+                    </span>
+                </Link>
                 <div className="w-24" />
             </header>
 
