@@ -19,13 +19,6 @@ const references = [
         address: '[Adres bilgisi eklenecek]',
         googleMapsUrl: '#',
     },
-    {
-        id: 3,
-        name: 'MEDiZ Kuyumculuk',
-        image: '/references/ref-3.png',
-        address: '[Adres bilgisi eklenecek]',
-        googleMapsUrl: '#',
-    },
 ];
 
 export default function ReferencesPage() {
@@ -70,7 +63,7 @@ export default function ReferencesPage() {
                     <div className="w-16 h-[2px] bg-gradient-to-r from-transparent via-[#d4af37] to-transparent mx-auto" />
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 max-w-3xl mx-auto">
                     {references.map((ref, index) => (
                         <motion.div
                             key={ref.id}
