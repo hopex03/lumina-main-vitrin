@@ -22,6 +22,7 @@ export default function GlobalFooter() {
             <ul className="flex flex-col gap-4 text-xs text-gray-400 font-light">
               <li><Link href="/kurumsal/hakkimizda" className="hover:text-gold transition-colors inline-block transform hover:translate-x-1 duration-300">Hakkımızda</Link></li>
               <li><Link href="/iletisim" className="hover:text-gold transition-colors inline-block transform hover:translate-x-1 duration-300">İletişim</Link></li>
+              <li><Link href="/referanslar" className="hover:text-gold transition-colors inline-block transform hover:translate-x-1 duration-300">Referanslar</Link></li>
               <li><Link href="/kurumsal/kvkk" className="hover:text-gold transition-colors inline-block transform hover:translate-x-1 duration-300">KVKK</Link></li>
             </ul>
           </div>

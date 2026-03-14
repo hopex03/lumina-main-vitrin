@@ -350,6 +350,9 @@ export default function Home() {
             <div className="flex items-center gap-3">
               <Link href="/iletisim" className="hover:text-dark transition-colors">İletişim</Link>
             </div>
+            <div className="flex items-center gap-3">
+              <Link href="/referanslar" className="hover:text-dark transition-colors">Referanslar</Link>
+            </div>
           </div>
           {/* MOBIL HAMBURGER */}
           <div className="flex md:hidden flex-1 items-center gap-3">
@@ -413,6 +416,7 @@ export default function Home() {
         {isMobileMenuOpen && (
           <div className="md:hidden bg-white border-t border-zinc-100 px-6 py-4 flex flex-col gap-4 animate-fade-in">
             <Link href="/iletisim" className="text-xs font-bold tracking-widest uppercase text-zinc-600 hover:text-[#d4af37] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Bize Ulaşın</Link>
+            <Link href="/referanslar" className="text-xs font-bold tracking-widest uppercase text-zinc-600 hover:text-[#d4af37] transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Referanslar</Link>
             <div className="h-px bg-zinc-100" />
             {['Hepsi', 'Bileklik', 'Kolye', 'Yüzük', 'Küpe', 'Saat'].map(cat => (
               <button key={cat} onClick={() => { handleCategoryChange(cat); setIsMobileMenuOpen(false); }}
