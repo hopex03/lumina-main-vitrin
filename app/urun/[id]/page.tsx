@@ -6,7 +6,7 @@ import { supabase } from '@/app/lib/supabase';
 import { motion, AnimatePresence, useMotionValue, useTransform } from 'framer-motion';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import GlobalFooter from '@/components/GlobalFooter';
-import BrandLogo from '@/components/BrandLogo';
+
 
 const formatPrice = (price: any) =>
   Number(price).toLocaleString('tr-TR') + ' ₺';
@@ -262,8 +262,18 @@ export default function ProductDetail() {
           <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
           Vitrine Dön
         </Link>
-        <Link href="/" className="group flex-shrink-0 scale-75 md:scale-90">
-          <BrandLogo className="w-40 h-16" subText="GİRESUN" />
+        <Link href="/" className="group inline-flex flex-col items-center transition-opacity hover:opacity-90 relative scale-75 md:scale-90">
+          <svg viewBox="0 0 100 85" className="absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[52%] w-16 h-16 text-[#D4AF37] opacity-[0.15] drop-shadow-sm group-hover:scale-105 transition-transform duration-700 z-0" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinejoin="miter">
+            <path d="M50 10 L15 75 h70 Z" />
+            <path d="M35 10 L5 75 h30 M65 10 L95 75 h-30" />
+            <path d="M25 45 L50 85 L75 45" />
+          </svg>
+          <span className="relative z-10 text-xl font-serif tracking-[0.2em] font-black text-zinc-800 uppercase">
+            Zeray Gold
+          </span>
+          <p className="relative z-10 text-[9px] text-zinc-400 font-bold tracking-[0.4em] uppercase">
+            Est. 2026
+          </p>
         </Link>
         <div className="w-24 flex justify-end gap-3">
           <button

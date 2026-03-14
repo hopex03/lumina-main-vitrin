@@ -1,7 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { supabase } from '@/app/lib/supabase';
-import BrandLogo from '@/components/BrandLogo';
+
 
 const ADMIN_PASSWORD = 'Zeray2026!';
 
@@ -233,7 +233,19 @@ export default function AdminPanel() {
       <div className="min-h-screen bg-[#1d2327] flex items-center justify-center">
         <div className="bg-[#2c3338] border border-[#3c434a] p-10 w-full max-w-sm shadow-2xl">
           <div className="text-center mb-10">
-            <BrandLogo className="w-48 h-20 mx-auto" textColor="text-white" subText="GİRESUN" />
+            <div className="flex flex-col items-center relative mb-4">
+              <svg viewBox="0 0 100 85" className="absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[52%] w-24 h-24 text-[#D4AF37] opacity-[0.15] z-0" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinejoin="miter">
+                <path d="M50 10 L15 75 h70 Z" />
+                <path d="M35 10 L5 75 h30 M65 10 L95 75 h-30" />
+                <path d="M25 45 L50 85 L75 45" />
+              </svg>
+              <span className="relative z-10 text-2xl font-serif tracking-[0.2em] font-black text-white uppercase">
+                Zeray Gold
+              </span>
+              <p className="relative z-10 text-[10px] text-zinc-400 font-bold tracking-[0.4em] uppercase">
+                Est. 2026
+              </p>
+            </div>
             <div className="text-[#72aee6] text-[10px] tracking-[0.4em] uppercase font-bold mt-4">Merkez Yönetim Paneli</div>
           </div>
           <div className="mb-4">
