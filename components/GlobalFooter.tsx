@@ -7,10 +7,15 @@ export default function GlobalFooter() {
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
           <div>
-            <Link href="/" className="group inline-flex flex-col items-center md:items-start transition-opacity hover:opacity-90">
-              <span className="text-xl font-serif tracking-[0.2em] font-black text-gold uppercase mb-2">
-                Zeray Gold
-              </span>
+            <Link href="/" className="group inline-flex flex-col items-center md:items-start transition-opacity hover:opacity-90 relative">
+              <div className="flex flex-col items-center md:items-start leading-tight mb-2">
+                <span className="text-xl font-serif tracking-[0.3em] font-black text-gold uppercase">
+                  Zeray
+                </span>
+                <span className="text-xl font-serif tracking-[0.3em] font-black text-gold uppercase">
+                  Gold
+                </span>
+              </div>
               <p className="text-[10px] text-gray-400 font-bold tracking-[0.4em] uppercase">
                 Est. 2026
               </p>

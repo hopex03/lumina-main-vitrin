@@ -233,16 +233,21 @@ export default function AdminPanel() {
       <div className="min-h-screen bg-[#1d2327] flex items-center justify-center">
         <div className="bg-[#2c3338] border border-[#3c434a] p-10 w-full max-w-sm shadow-2xl">
           <div className="text-center mb-10">
-            <div className="flex flex-col items-center relative mb-4">
-              <svg viewBox="0 0 100 85" className="absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[52%] w-24 h-24 text-[#D4AF37] opacity-[0.15] z-0" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinejoin="miter">
+            <div className="flex flex-col items-center relative mb-4 w-48 h-24 flex items-center justify-center">
+              <svg viewBox="0 0 100 85" className="absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[52%] w-28 h-28 text-[#D4AF37] opacity-[0.15] z-0" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinejoin="miter">
                 <path d="M50 10 L15 75 h70 Z" />
                 <path d="M35 10 L5 75 h30 M65 10 L95 75 h-30" />
                 <path d="M25 45 L50 85 L75 45" />
               </svg>
-              <span className="relative z-10 text-2xl font-serif tracking-[0.2em] font-black text-white uppercase">
-                Zeray Gold
-              </span>
-              <p className="relative z-10 text-[10px] text-zinc-400 font-bold tracking-[0.4em] uppercase">
+              <div className="relative z-10 flex flex-col items-center leading-tight">
+                <span className="text-2xl font-serif tracking-[0.3em] font-black text-white uppercase">
+                    Zeray
+                </span>
+                <span className="text-2xl font-serif tracking-[0.3em] font-black text-white uppercase">
+                    Gold
+                </span>
+              </div>
+              <p className="relative z-10 text-[10px] text-zinc-400 font-bold tracking-[0.4em] uppercase mt-1">
                 Est. 2026
               </p>
             </div>
