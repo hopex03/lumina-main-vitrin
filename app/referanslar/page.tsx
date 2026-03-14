@@ -7,17 +7,24 @@ import GlobalFooter from '../../components/GlobalFooter';
 const references = [
     {
         id: 1,
-        name: 'ATAR Kuyumculuk',
+        name: 'Giresun Merkez Atölye',
         image: '/references/ref-1.png',
-        address: '[Adres bilgisi eklenecek]',
-        googleMapsUrl: '#',
+        address: 'Hacı Siyam, Giresun, Türkiye',
+        googleMapsUrl: 'https://maps.google.com/?q=Giresun',
     },
     {
         id: 2,
-        name: 'Fatih Kuyumculuk',
+        name: 'Zeray Gold Vitrin - Giresun',
         image: '/references/ref-2.png',
-        address: '[Adres bilgisi eklenecek]',
-        googleMapsUrl: '#',
+        address: 'Atatürk Bulvarı, Giresun, Türkiye',
+        googleMapsUrl: 'https://maps.google.com/?q=Giresun',
+    },
+    {
+        id: 3,
+        name: 'Zeray Gold Tasarım Ofisi',
+        image: '/references/ref-3.png',
+        address: 'Nizamiye, Giresun, Türkiye',
+        googleMapsUrl: 'https://maps.google.com/?q=Giresun',
     },
 ];
 

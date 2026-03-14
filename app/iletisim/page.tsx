@@ -1,9 +1,10 @@
 'use client';
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { supabase } from '../lib/supabase';
+import { supabase } from '@/app/lib/supabase';
 import { motion, AnimatePresence } from 'framer-motion';
-import GlobalFooter from '../../components/GlobalFooter';
+import GlobalFooter from '@/components/GlobalFooter';
+import BrandLogo from '@/components/BrandLogo';
 
 export default function ContactPage() {
     const [form, setForm] = useState({ name: '', email: '', phone: '', subject: '', message: '' });
@@ -40,7 +41,8 @@ export default function ContactPage() {
             });
 
             if (!mailRes.ok) {
-                console.warn('Mail fetch failed, but saved to DB');
+                const errorData = await mailRes.json();
+                throw new Error(errorData.error || 'Mail gönderim hatası');
             }
 
             setSuccess(true);
@@ -65,7 +67,9 @@ export default function ContactPage() {
                     <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
                     Ana Sayfa
                 </Link>
-                <Link href="/" className="text-2xl md:text-3xl font-serif tracking-[0.35em] text-black">ZERAY GOLD</Link>
+                <Link href="/" className="group flex-shrink-0">
+                    <BrandLogo className="w-40 h-16" subText="GİRESUN" />
+                </Link>
                 <div className="w-24" />
             </header>
 
@@ -95,9 +99,9 @@ export default function ContactPage() {
                         <p className="text-[#d4af37] text-[10px] tracking-[0.4em] uppercase font-bold mb-4">İletişim Bilgileri</p>
                         <div className="space-y-6">
                             {[
-                                { label: 'E-Posta', value: 'destek@zeraygold.com.tr', href: 'mailto:destek@zeraygold.com.tr' },
+                                { label: 'E-Posta', value: 'zeraydestek@gmail.com', href: 'mailto:zeraydestek@gmail.com' },
                                 { label: 'Telefon', value: '+90 (553) 746 78 70', href: 'tel:+905537467870' },
-                                { label: 'Adres', value: 'İstanbul, Türkiye', href: '#' },
+                                { label: 'Adres', value: 'Giresun, Türkiye', href: '#' },
                             ].map(item => (
                                 <div key={item.label}>
                                     <p className="text-[9px] text-[#d4af37] font-bold tracking-[0.3em] uppercase mb-1">{item.label}</p>
@@ -143,7 +147,7 @@ export default function ContactPage() {
                                     <h2 className="font-serif text-2xl text-zinc-900 mb-4 tracking-wide uppercase">Talebiniz Kayıt Altına Alınmıştır</h2>
                                     <p className="text-zinc-500 text-sm font-light leading-relaxed mt-4">
                                         Değerli müşterimiz, iletmiş olduğunuz talep kurumumuzca işleme alınmış olup, <br />
-                                        <b className="text-zinc-700 font-semibold tracking-wider">destek@zeraygold.com.tr</b> üzerinden tarafınıza en kısa sürede resmi geri dönüş sağlanacaktır.
+                                        <b className="text-zinc-700 font-semibold tracking-wider">zeraydestek@gmail.com</b> üzerinden tarafınıza en kısa sürede resmi geri dönüş sağlanacaktır.
                                     </p>
                                 </div>
                                 <button onClick={() => setSuccess(false)} className="text-[10px] font-bold tracking-[0.25em] uppercase border-b border-zinc-800 pb-1 hover:text-[#d4af37] hover:border-[#d4af37] transition-colors">
@@ -165,7 +169,7 @@ export default function ContactPage() {
                                         <label className="block text-[9px] font-bold tracking-[0.3em] uppercase text-zinc-500 mb-2">E-Posta *</label>
                                         <input
                                             type="email" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })}
-                                            placeholder="ornek@email.com"
+                                            placeholder="zeraydestek@gmail.com"
                                             className="w-full bg-zinc-50 border border-zinc-200 p-4 text-sm outline-none focus:border-[#d4af37] focus:bg-white transition-all font-light"
                                         />
                                     </div>

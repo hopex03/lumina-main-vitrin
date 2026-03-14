@@ -1,9 +1,10 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { supabase } from './lib/supabase';
+import { supabase } from '@/app/lib/supabase';
 import { motion, AnimatePresence } from 'framer-motion';
-import GlobalFooter from '../components/GlobalFooter';
+import GlobalFooter from '@/components/GlobalFooter';
+import BrandLogo from '@/components/BrandLogo';
 
 const formatPrice = (price: any) =>
   Number(price).toLocaleString('tr-TR') + ' ₺';
@@ -304,6 +305,27 @@ export default function Home() {
       }]);
       if (oErr) throw oErr;
 
+      // SİPARİŞ BİLDİRİMİ (Satıcıya E-posta)
+      try {
+          const mailRes = await fetch('/api/contact', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                  name: checkoutForm.fullName,
+                  email: checkoutForm.email,
+                  phone: checkoutForm.phone,
+                  subject: 'YENİ SİPARİŞ ALINDI',
+                  message: `Yeni bir sipariş oluşturuldu.\n\nMüşteri: ${checkoutForm.fullName}\nEmail: ${checkoutForm.email}\nTelefon: ${checkoutForm.phone}\nAdres: ${addressString}\n\nToplam Tutar: ${formatPrice(totalAmount)}\nSipariş Detayları: ${JSON.stringify(cart)}`
+              })
+          });
+          if (!mailRes.ok) {
+            const errorData = await mailRes.json();
+            throw new Error(errorData.error || 'Mail gönderim hatası');
+          }
+      } catch (e) {
+          console.error("Sipariş bildirim e-postası gönderilemedi:", e);
+      }
+
       setOrderSuccess(true);
       localStorage.removeItem('zeray_cart');
       setCart([]);
@@ -364,18 +386,9 @@ export default function Home() {
               {isMobileMenuOpen ? '×' : '☰'}
             </button>
           </div>
-          <div className="flex-1 flex justify-center">
-            <Link href="/" className="group flex items-center justify-center transition-opacity hover:opacity-90 relative w-[280px] h-[80px]">
-              {/* Opacity %15 to not interrupt readability, absolute centered */}
-              <svg viewBox="0 0 100 85" className="absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[52%] w-24 h-24 text-[#D4AF37] opacity-[0.15] drop-shadow-sm group-hover:scale-105 transition-transform duration-700 z-0" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinejoin="miter">
-                {/* Minimalist Interlocking Triangles Logo Behind Text */}
-                <path d="M50 10 L15 75 h70 Z" />
-                <path d="M35 10 L5 75 h30 M65 10 L95 75 h-30" />
-                <path d="M25 45 L50 85 L75 45" />
-              </svg>
-              <span className="relative z-10 text-2xl md:text-3xl font-serif tracking-[0.25em] font-black bg-clip-text text-transparent bg-dark-gradient uppercase">
-                Zeray Gold
-              </span>
+          <div className="flex-1 flex justify-center scale-90 md:scale-100">
+            <Link href="/" className="group transition-opacity hover:opacity-90">
+              <BrandLogo className="w-48 h-20" subText="GİRESUN" />
             </Link>
           </div>
 
@@ -831,10 +844,17 @@ export default function Home() {
 
                   <div className="text-center flex-1 flex flex-col justify-between px-1">
                     <div>
-                      {/* Satıcı Etiketi */}
-                      <p className="text-[9px] uppercase tracking-[0.2em] font-bold bg-[#f0f0f1] inline-block px-2 py-0.5 rounded-sm text-zinc-500 mb-2">
-                        {product.vendor_name || 'Zeray Gold Özel'}
-                      </p>
+                      {/* Satıcı Etiketi ve Özellikler */}
+                      <div className="flex flex-col items-center gap-1 mb-2">
+                        <p className="text-[9px] uppercase tracking-[0.2em] font-bold bg-[#f0f0f1] inline-block px-2 py-0.5 rounded-sm text-zinc-500">
+                          {product.vendor_name || 'Zeray Gold Özel'}
+                        </p>
+                        <div className="flex gap-2 text-[9px] text-zinc-400 font-medium tracking-widest uppercase">
+                          <span>{product.karat || product.ayar || '14k'}</span>
+                          <span>•</span>
+                          <span>{product.gram || product.weight ? `${product.gram || product.weight} gr` : '—'}</span>
+                        </div>
+                      </div>
                       {/* --- DETAY SAYFASINA GİDEN TIKLANABİLİR İSİM --- */}
                       <Link
                         href={`/urun/${product.id}`}
@@ -1132,7 +1152,7 @@ export default function Home() {
                 )}
 
                 <p className="text-[9px] text-zinc-400 text-center mt-5 uppercase tracking-widest leading-relaxed px-4">
-                  Siparişi Tamamla'ya tıklayarak <Link href="/iade-sartlari" className="underline hover:text-gold transition-colors">Mesafeli Satış Sözleşmesi'ni</Link> kabul etmiş olursunuz.
+                  Siparişi Tamamla'ya tıklayarak <Link href="/kurumsal/iade-ve-degisim" className="underline hover:text-gold transition-colors">Mesafeli Satış Sözleşmesi'ni</Link> kabul etmiş olursunuz.
                 </p>
               </div>
             </div>

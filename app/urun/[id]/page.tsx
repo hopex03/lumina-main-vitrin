@@ -2,10 +2,11 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
-import { supabase } from '../../lib/supabase';
+import { supabase } from '@/app/lib/supabase';
 import { motion, AnimatePresence, useMotionValue, useTransform } from 'framer-motion';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import GlobalFooter from '@/components/GlobalFooter';
+import BrandLogo from '@/components/BrandLogo';
 
 const formatPrice = (price: any) =>
   Number(price).toLocaleString('tr-TR') + ' ₺';
@@ -261,7 +262,9 @@ export default function ProductDetail() {
           <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
           Vitrine Dön
         </Link>
-        <Link href="/" className="text-2xl md:text-3xl font-serif tracking-[0.35em] text-black">ZERAY GOLD</Link>
+        <Link href="/" className="group flex-shrink-0 scale-75 md:scale-90">
+          <BrandLogo className="w-40 h-16" subText="GİRESUN" />
+        </Link>
         <div className="w-24 flex justify-end gap-3">
           <button
             onClick={() => setIsWishlistOpen(true)}
@@ -524,10 +527,11 @@ export default function ProductDetail() {
               className="grid grid-cols-1 md:grid-cols-2 gap-6"
             >
               {[
-                { label: 'Maden', value: product.metal || '—' },
-                { label: 'Ağırlık', value: product.gram ? `${product.gram} gram` : '—' },
+                { label: 'Maden / Materyal', value: product.metal || 'Altın' },
+                { label: 'Ayar (Karat)', value: product.karat || product.ayar || '14k' },
+                { label: 'Gramaj', value: product.gram || product.weight ? `${product.gram || product.weight} gr` : '—' },
                 { label: 'Kategori', value: product.category || '—' },
-                { label: 'Stok Durumu', value: product.stock > 0 ? `${product.stock} adet mevcut` : 'Tükendi' },
+                { label: 'Sertifika', value: 'Zeray Gold Güvence Sertifikalı' },
               ].map((row, i) => (
                 <div key={i} className="border border-zinc-100 p-5 rounded-sm">
                   <p className="text-[9px] text-[#d4af37] tracking-[0.3em] uppercase font-bold mb-2">{row.label}</p>

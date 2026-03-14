@@ -1,6 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import { supabase } from '../lib/supabase';
+import { supabase } from '@/app/lib/supabase';
+import BrandLogo from '@/components/BrandLogo';
 
 const ADMIN_PASSWORD = 'Zeray2026!';
 
@@ -167,7 +168,10 @@ export default function AdminPanel() {
       status: (formData.get('status') as string) || 'Yayımlanmış',
       description: formData.get('description') as string,
       metal: formData.get('metal') as string,
-      gram: formData.get('gram') as string,
+      karat: formData.get('karat') as string, // UI ve DB için
+      ayar: formData.get('karat') as string,  // DB yedeği
+      gram: formData.get('gram') as string,   // UI için
+      weight: formData.get('gram') as string, // DB için
       image: finalImage,
     };
 
@@ -175,7 +179,7 @@ export default function AdminPanel() {
     if (fullEditData === 'new') {
       // BUG FIX: only generate slug on INSERT, not update
       productData.slug = 'urun-' + Math.floor(Math.random() * 100000);
-      productData.sku = 'LMN-' + Math.floor(Math.random() * 10000);
+      productData.sku = 'ZRY-' + Math.floor(Math.random() * 10000);
       const res = await supabase.from('products').insert([productData]);
       error = res.error;
     } else {
@@ -228,9 +232,9 @@ export default function AdminPanel() {
     return (
       <div className="min-h-screen bg-[#1d2327] flex items-center justify-center">
         <div className="bg-[#2c3338] border border-[#3c434a] p-10 w-full max-w-sm shadow-2xl">
-          <div className="text-center mb-8">
-            <div className="text-3xl font-serif tracking-[0.3em] text-white mb-1">ZERAY GOLD</div>
-            <div className="text-[#72aee6] text-[11px] tracking-[0.25em] uppercase font-bold">Admin Panel</div>
+          <div className="text-center mb-10">
+            <BrandLogo className="w-48 h-20 mx-auto" textColor="text-white" subText="GİRESUN" />
+            <div className="text-[#72aee6] text-[10px] tracking-[0.4em] uppercase font-bold mt-4">Merkez Yönetim Paneli</div>
           </div>
           <div className="mb-4">
             <label className="block text-[#a7aaad] text-[11px] uppercase tracking-wider mb-2 font-bold">Parola</label>
@@ -449,22 +453,41 @@ export default function AdminPanel() {
                           Ürün Özellikleri
                         </div>
                         <div className="p-5">
-                          <div className="mb-4">
-                            <label className="block font-bold text-gray-700 mb-2">
-                              Maden Bilgisi / Ayar
-                            </label>
-                            <input
-                              name="metal"
-                              type="text"
-                              defaultValue={
-                                fullEditData !== 'new' ? fullEditData.metal : ''
-                              }
-                              placeholder="Örn: 14 Ayar Beyaz Altın, 0.30 Karat Pırlanta"
-                              className="w-full md:w-1/2 p-2 border border-[#8c8f94] outline-none focus:border-[#2271b1]"
-                            />
-                            <p className="text-gray-400 text-xs mt-2 italic">
-                              * İlgili ürünün materyal ve varsa taş özelliklerini tek cümleyle buraya yazabilirsiniz.
-                            </p>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                              <label className="block font-bold text-gray-700 mb-2">
+                                Maden / Materyal
+                              </label>
+                              <input
+                                name="metal"
+                                type="text"
+                                defaultValue={
+                                  fullEditData !== 'new' ? fullEditData.metal : ''
+                                }
+                                placeholder="Örn: Sarı Altın, Beyaz Altın"
+                                className="w-full p-2 border border-[#8c8f94] outline-none focus:border-[#2271b1]"
+                              />
+                            </div>
+                            <div>
+                              <label className="block font-bold text-gray-700 mb-2">
+                                Ayar (Karat)
+                              </label>
+                              <select
+                                name="karat"
+                                defaultValue={
+                                  fullEditData !== 'new' ? fullEditData.karat : '14k'
+                                }
+                                className="w-full p-2 border border-[#8c8f94] outline-none focus:border-[#2271b1]"
+                              >
+                                <option value="8k">8 Ayar</option>
+                                <option value="14k">14 Ayar</option>
+                                <option value="18k">18 Ayar</option>
+                                <option value="21k">21 Ayar</option>
+                                <option value="22k">22 Ayar</option>
+                                <option value="24k">24 Ayar (Has)</option>
+                                <option value="925">925 Ayar Gümüş</option>
+                              </select>
+                            </div>
                           </div>
 
                           <div className="mb-2">

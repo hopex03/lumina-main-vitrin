@@ -40,7 +40,7 @@ export default function KVKKPage() {
 
         <h2 className="text-xl font-bold tracking-widest uppercase text-dark mb-4 drop-shadow-sm mt-8 border-b border-zinc-100 pb-2">Kullanıcı Hakları</h2>
         <p>
-          KVKK 11. madde uyarınca kişisel verilerinizle ilgili bilgi alma, silinmesini/düzeltilmesini talep etme ve kayıtlı olduğu durumlara itiraz etme hakkına sahipsiniz. Tüm taleplerinizi <strong>destek@zeraygold.com.tr</strong> adresinden bize ulaştırabilirsiniz.
+          KVKK 11. madde uyarınca kişisel verilerinizle ilgili bilgi alma, silinmesini/düzeltilmesini talep etme ve kayıtlı olduğu durumlara itiraz etme hakkına sahipsiniz. Tüm taleplerinizi <strong>zeraydestek@gmail.com</strong> adresinden bize ulaştırabilirsiniz.
         </p>
       </section>
     </article>

@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import BrandLogo from '@/components/BrandLogo';
 
 export default function GlobalFooter() {
   return (
@@ -6,8 +7,8 @@ export default function GlobalFooter() {
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
           <div>
-            <h3 className="text-3xl font-serif tracking-[0.25em] mb-6 text-gradient-gold">ZERAY GOLD</h3>
-            <p className="text-gray-300 text-sm leading-relaxed mb-8 pe-4 font-serif tracking-[0.2em] font-medium uppercase">
+            <BrandLogo className="w-48 h-20 mb-6" textColor="text-gold" subText="GİRESUN" />
+            <p className="text-gray-300 text-[10px] leading-relaxed mb-8 pe-4 font-serif tracking-[0.2em] font-medium uppercase text-center md:text-left">
               SEKTÖREL BİRLEŞİK GÜÇ VE KURUMSAL GÜVENCE
             </p>
             <div className="flex gap-4">

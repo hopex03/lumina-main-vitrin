@@ -11,21 +11,20 @@ export async function POST(req: Request) {
 
     // SMTP yapılandırması
     const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST || 'smtp-relay.brevo.com',
+      host: process.env.SMTP_HOST || 'smtp.gmail.com',
       port: Number(process.env.SMTP_PORT) || 587,
       secure: false, // TLS
       auth: {
-        user: process.env.SMTP_USER,
+        user: process.env.SMTP_USER || 'zeraydestek@gmail.com',
         pass: process.env.SMTP_PASS,
       },
     });
 
-    // Gönderici 'destek@zeraygold.com.tr' olmazsa Brevo / Zoho Relay hatası verebilir (Sender Identity Override).
-    // O yüzden from kısmı 'destek' olmak zorunda, ancak 'replyTo' müşterinin e-postası olacak.
+    // Gönderici ve alıcı zeraydestek@gmail.com olarak güncellendi.
     const mailOptions = {
-      from: `"Zeray İletişim Formu" <destek@zeraygold.com.tr>`, 
+      from: `"Zeray Gold Destek" <zeraydestek@gmail.com>`, 
       replyTo: email,
-      to: 'destek@zeraygold.com.tr',
+      to: 'zeraydestek@gmail.com',
       subject: `Yeni İletişim Mesajı: ${subject || 'Bilinmeyen Konu'} - ${name}`,
       html: `
         <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; border: 1px solid #ddd; padding: 20px;">

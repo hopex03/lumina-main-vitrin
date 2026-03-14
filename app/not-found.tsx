@@ -1,6 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import BrandLogo from '@/components/BrandLogo';
 
 export default function NotFound() {
     return (
@@ -18,9 +19,7 @@ export default function NotFound() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             >
-                <p className="text-[#d4af37] text-[10px] tracking-[0.5em] uppercase font-bold mb-6">
-                    Zeray Gold
-                </p>
+                <BrandLogo className="w-40 h-16 mx-auto mb-8" textColor="text-white" subText="GİRESUN" />
                 <h1 className="font-serif text-[120px] md:text-[180px] leading-none text-white/10 font-black tracking-tighter select-none">
                     404
                 </h1>

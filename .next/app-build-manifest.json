@@ -1,135 +1,25 @@
 {
   "pages": {
+    "/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/page.js"
+    ],
     "/not-found": [
-      "static/chunks/webpack-655bfc2a7701174c.js",
-      "static/chunks/fd9d1056-b34e90ae3fbd908b.js",
-      "static/chunks/69-a88dc7a4b3f8858b.js",
-      "static/chunks/main-app-52662e67ea6adaad.js",
-      "static/chunks/50-b70185686a483280.js",
-      "static/chunks/792-175a2ceac2e98e2c.js",
-      "static/chunks/app/not-found-e41c263812eed66e.js"
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/not-found.js"
     ],
     "/layout": [
-      "static/chunks/webpack-655bfc2a7701174c.js",
-      "static/chunks/fd9d1056-b34e90ae3fbd908b.js",
-      "static/chunks/69-a88dc7a4b3f8858b.js",
-      "static/chunks/main-app-52662e67ea6adaad.js",
-      "static/chunks/50-b70185686a483280.js",
-      "static/css/e21c939c2c485ee1.css",
-      "static/chunks/app/layout-bb99b767a3f34e83.js"
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/layout.css",
+      "static/chunks/app/layout.js"
     ],
-    "/detay/page": [
-      "static/chunks/webpack-655bfc2a7701174c.js",
-      "static/chunks/fd9d1056-b34e90ae3fbd908b.js",
-      "static/chunks/69-a88dc7a4b3f8858b.js",
-      "static/chunks/main-app-52662e67ea6adaad.js",
-      "static/chunks/app/detay/page-09ec5fc26aa1bd84.js"
-    ],
-    "/iletisim/page": [
-      "static/chunks/webpack-655bfc2a7701174c.js",
-      "static/chunks/fd9d1056-b34e90ae3fbd908b.js",
-      "static/chunks/69-a88dc7a4b3f8858b.js",
-      "static/chunks/main-app-52662e67ea6adaad.js",
-      "static/chunks/50-b70185686a483280.js",
-      "static/chunks/792-175a2ceac2e98e2c.js",
-      "static/chunks/688-eee36c7715b2f151.js",
-      "static/chunks/48-7067908d2d8ab8f8.js",
-      "static/chunks/app/iletisim/page-f30faa4a54a2205a.js"
-    ],
-    "/zeray-gold/page": [
-      "static/chunks/webpack-655bfc2a7701174c.js",
-      "static/chunks/fd9d1056-b34e90ae3fbd908b.js",
-      "static/chunks/69-a88dc7a4b3f8858b.js",
-      "static/chunks/main-app-52662e67ea6adaad.js",
-      "static/chunks/50-b70185686a483280.js",
-      "static/chunks/app/zeray-gold/page-fe0f313530287f1d.js"
-    ],
-    "/page": [
-      "static/chunks/webpack-655bfc2a7701174c.js",
-      "static/chunks/fd9d1056-b34e90ae3fbd908b.js",
-      "static/chunks/69-a88dc7a4b3f8858b.js",
-      "static/chunks/main-app-52662e67ea6adaad.js",
-      "static/chunks/50-b70185686a483280.js",
-      "static/chunks/792-175a2ceac2e98e2c.js",
-      "static/chunks/688-eee36c7715b2f151.js",
-      "static/chunks/48-7067908d2d8ab8f8.js",
-      "static/chunks/app/page-35c281f88a41e911.js"
-    ],
-    "/urun/[id]/page": [
-      "static/chunks/webpack-655bfc2a7701174c.js",
-      "static/chunks/fd9d1056-b34e90ae3fbd908b.js",
-      "static/chunks/69-a88dc7a4b3f8858b.js",
-      "static/chunks/main-app-52662e67ea6adaad.js",
-      "static/chunks/50-b70185686a483280.js",
-      "static/chunks/792-175a2ceac2e98e2c.js",
-      "static/chunks/688-eee36c7715b2f151.js",
-      "static/chunks/48-7067908d2d8ab8f8.js",
-      "static/chunks/app/urun/[id]/page-d63f974e6e85b8c0.js"
-    ],
-    "/admin/layout": [
-      "static/chunks/webpack-655bfc2a7701174c.js",
-      "static/chunks/fd9d1056-b34e90ae3fbd908b.js",
-      "static/chunks/69-a88dc7a4b3f8858b.js",
-      "static/chunks/main-app-52662e67ea6adaad.js",
-      "static/chunks/app/admin/layout-99b0599e5825da86.js"
-    ],
-    "/admin/urunler/page": [
-      "static/chunks/webpack-655bfc2a7701174c.js",
-      "static/chunks/fd9d1056-b34e90ae3fbd908b.js",
-      "static/chunks/69-a88dc7a4b3f8858b.js",
-      "static/chunks/main-app-52662e67ea6adaad.js",
-      "static/chunks/app/admin/urunler/page-d39a0dc5791a92dc.js"
-    ],
-    "/admin/page": [
-      "static/chunks/webpack-655bfc2a7701174c.js",
-      "static/chunks/fd9d1056-b34e90ae3fbd908b.js",
-      "static/chunks/69-a88dc7a4b3f8858b.js",
-      "static/chunks/main-app-52662e67ea6adaad.js",
-      "static/chunks/688-eee36c7715b2f151.js",
-      "static/chunks/app/admin/page-ae5340dc60a49a87.js"
-    ],
-    "/kurumsal/layout": [
-      "static/chunks/webpack-655bfc2a7701174c.js",
-      "static/chunks/fd9d1056-b34e90ae3fbd908b.js",
-      "static/chunks/69-a88dc7a4b3f8858b.js",
-      "static/chunks/main-app-52662e67ea6adaad.js",
-      "static/chunks/792-175a2ceac2e98e2c.js",
-      "static/chunks/app/kurumsal/layout-a482eb34565aa31e.js"
-    ],
-    "/kurumsal/hakkimizda/page": [
-      "static/chunks/webpack-655bfc2a7701174c.js",
-      "static/chunks/fd9d1056-b34e90ae3fbd908b.js",
-      "static/chunks/69-a88dc7a4b3f8858b.js",
-      "static/chunks/main-app-52662e67ea6adaad.js",
-      "static/chunks/app/kurumsal/hakkimizda/page-a9c94bd89197fe3e.js"
-    ],
-    "/kurumsal/iade-ve-degisim/page": [
-      "static/chunks/webpack-655bfc2a7701174c.js",
-      "static/chunks/fd9d1056-b34e90ae3fbd908b.js",
-      "static/chunks/69-a88dc7a4b3f8858b.js",
-      "static/chunks/main-app-52662e67ea6adaad.js",
-      "static/chunks/app/kurumsal/iade-ve-degisim/page-cb66ebadd1f0983b.js"
-    ],
-    "/kurumsal/kullanim-kosullari/page": [
-      "static/chunks/webpack-655bfc2a7701174c.js",
-      "static/chunks/fd9d1056-b34e90ae3fbd908b.js",
-      "static/chunks/69-a88dc7a4b3f8858b.js",
-      "static/chunks/main-app-52662e67ea6adaad.js",
-      "static/chunks/app/kurumsal/kullanim-kosullari/page-c142ef05e47def41.js"
-    ],
-    "/kurumsal/teslimat-ve-kargo/page": [
-      "static/chunks/webpack-655bfc2a7701174c.js",
-      "static/chunks/fd9d1056-b34e90ae3fbd908b.js",
-      "static/chunks/69-a88dc7a4b3f8858b.js",
-      "static/chunks/main-app-52662e67ea6adaad.js",
-      "static/chunks/app/kurumsal/teslimat-ve-kargo/page-d30a9f1f6640a369.js"
-    ],
-    "/kurumsal/kvkk/page": [
-      "static/chunks/webpack-655bfc2a7701174c.js",
-      "static/chunks/fd9d1056-b34e90ae3fbd908b.js",
-      "static/chunks/69-a88dc7a4b3f8858b.js",
-      "static/chunks/main-app-52662e67ea6adaad.js",
-      "static/chunks/app/kurumsal/kvkk/page-6f564dc658004e7c.js"
+    "/referanslar/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/referanslar/page.js"
     ]
   }
 }

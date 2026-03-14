@@ -28,10 +28,10 @@ export const metadata: Metadata = {
     siteName: 'Zeray Gold',
     images: [
       {
-        url: '/opengraph-image.png',
-        width: 1200,
-        height: 630,
-        alt: 'Zeray Gold | Üç Atölyenin Ortak Işıltısı',
+        url: '/zeray-gold-logo.png',
+        width: 1024,
+        height: 1024,
+        alt: 'Zeray Gold | Giresun Premium Mücevherat',
       }
     ],
   },

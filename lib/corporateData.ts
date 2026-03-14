@@ -2,23 +2,23 @@ export const corporateData = {
   hakkimizda: {
     title: "Hakkımızda",
     missionStatement: "Üç büyük usta atölyesinin sektörel birleşik gücü ve kurumsal güvencesi.",
-    content: "Zamana meydan okuyan altın işçiliği ve kusursuz lüks tasarımıyla Zeray Gold, üç dev atölyenin ortak mirasını modern dünyaya taşıyor. Benzersiz koleksiyonlarımız, altın ustalarının ellerinde nesilden nesile aktarılan tekniklerle şekillenmekte, her detayında zanaatın estetikle o unutulmaz dansını sergilemektedir."
+    content: "Zeray Gold, Anadolu'nun kadim altın işleme geleneğini modern tasarım vizyonuyla birleştiren, Türkiye'nin önde gelen üç büyük usta atölyesinin güç birliğiyle doğmuştur. Sektördeki onlarca yıllık tecrübemiz ve 'zanaatkar hassasiyeti'mizle, her bir takıyı bir sanat eseri titizliğiyle işliyoruz. Kurumsal güvencemiz, tasarımdan üretime, vitrinden kapınıza kadar her aşamada en yüksek standartları taahhüt eder. Bizim için altın, sadece maden değil; ustalığın, sadakatin ve estetiğin ebedi yansımasıdır."
   },
   teslimatVeKargo: {
-    title: "Teslimat ve Kargo",
-    logisticsLogic: "Tüm gönderiler sigortalı kurye ile 1 ila 4 iş günü içerisinde teslim edilir.",
-    content: "Siparişleriniz, tamamen güvenli ve VIP taşıma sertifikalı özel kargo şirketleriyle kapınıza kadar sigortalı gönderilir."
+    title: "Teslimat ve Kargo (VIP Hizmet)",
+    logisticsLogic: "Değerli emanetiniz, Zeray Gold güvencesiyle sigortalı ve VIP kurye sistemimizle korunur.",
+    content: "Zamanın ve güvenin kıymetini biliyoruz. Siparişleriniz, tamamen sigortalı ve takı taşımacılığı konusunda uzmanlaşmış özel lojistik partnerlerimiz aracılığıyla, tüm Türkiye genelinde 1-3 iş günü içerisinde size ulaştırılır. Paketleme sürecimiz, ürününüzün formunu ve güvenliğini koruyacak şekilde, Zeray Gold mühürlü kutularında gerçekleştirilir."
   },
   iadeVeDegisim: {
-    title: "İade ve Değişim",
-    content: "Müşteri memnuniyetimiz, kalitemizin en büyük referansıdır. Orijinalliği ve formu bozulmamış satılamaz nitelik kazanmamış ürünlerinizi, 14 gün içerisinde sertifikasıyla birlikte iade edebilir veya değiştirebilirsiniz."
+    title: "İade, Değişim ve Garanti",
+    content: "Zeray Gold'dan aldığınız her ürün, kurumsal güvencemiz ve ömür boyu bakım garantimiz altındadır. Müşteri memnuniyeti odaklı politikamız gereği, ürününüzün orijinalliği bozulmadığı sürece 14 gün içerisinde iade veya değişim hakkınızı kullanabilirsiniz. Özel tasarım ürünlerde, usta ellerin hassasiyetiyle size özel çözümler sunmaktayız."
   },
   kullanimKosullari: {
-    title: "Kullanım Koşulları",
-    content: "Bu web sitesi (zeraygold.com.tr) Zeray Gold'a aittir. Sitedeki tüm görsel, işitsel veya yazılı materyaller, telif haklarına tabidir."
+    title: "Kullanım ve Güvenlik Koşulları",
+    content: "zeraygold.com.tr ana sayfasında ve tüm alt sayfalarında sunulan içerik, Zeray Gold'un fikri mülkiyetindedir. Sitemiz, üst düzey SSL sertifikaları ve 3D Secure ödeme altyapısıyla korunmaktadır. Kullanıcılarımızın güvenliği, dijital dünyadaki en öncelikli zırhımızdır."
   },
   kvkk: {
-    title: "KVKK Aydınlatma Metni",
-    content: "Kişisel verileriniz, 6698 sayılı Kişisel Verilerin Korunması Kanunu (KVKK) kapsamında, üstün güvenlik önlemleri altında ve sadece size daha iyi hizmet verebilmek amacıyla işlenmektedir."
+    title: "KVKK ve Gizlilik Politikası",
+    content: "Kişisel verileriniz, 6698 sayılı KVKK kapsamında, kurumsal etik ilkelerimiz çerçevesinde en yüksek güvenlik seviyesinde korunmaktadır. Paylaştığınız bilgiler, sadece size daha kusursuz bir alışveriş deneyimi sunmak ve Zeray Gold ayrıcalıklarından haberdar etmek amacıyla işlenmektedir. Bilgilerinizin mahremiyeti, profesyonelliğimizin temelidir."
   }
 };
